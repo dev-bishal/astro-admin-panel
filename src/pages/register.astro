@@ -1,0 +1,429 @@
+---
+import MainContainer from "../Layout/MainContainer.astro";
+
+
+---
+<style is:inline>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .tech-bg {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%),
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff" fill-opacity="0.1" points="0,1000 1000,0 1000,1000"/></svg>'),
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="2" fill="%23ffffff" fill-opacity="0.1"/><circle cx="600" cy="400" r="1" fill="%23ffffff" fill-opacity="0.1"/><circle cx="800" cy="700" r="1.5" fill="%23ffffff" fill-opacity="0.1"/><circle cx="300" cy="800" r="1" fill="%23ffffff" fill-opacity="0.1"/></svg>');
+        background-size: cover, cover, cover;
+        background-position: center;
+    }
+
+    .form-container {
+        backdrop-filter: blur(10px);
+    }
+
+    .input-group {
+        transition: all 0.3s ease;
+    }
+
+    .input-group:focus-within {
+        transform: translateY(-2px);
+    }
+
+    .floating-label {
+        transition: all 0.3s ease;
+    }
+
+    .input-field:focus+.floating-label,
+    .input-field:not(:placeholder-shown)+.floating-label {
+        transform: translateY(-24px) scale(0.85);
+        color: #3b82f6;
+    }
+
+    .feature-card {
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .floating {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
+
+<MainContainer PageTitle="Register">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+        <!-- Left Side - Registration Form -->
+        <div class="flex-1 flex items-center justify-center px-4 py-12 lg:px-8 lg:py-24">
+            <div class="max-w-md w-full space-y-8 form-container">
+                <!-- Header -->
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mr-3">
+                            <i class="fas fa-rocket text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold gradient-text">TechFlow</h2>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900">Create your account</h2>
+                    <p class="mt-2 text-gray-600">
+                        Join thousands of innovators already building with us
+                    </p>
+                </div>
+
+                <!-- Social Login -->
+                <div class="mt-8">
+                    <div class="grid grid-cols-2 gap-3">
+                        <button
+                            class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <i class="fab fa-google text-red-500 mr-2"></i>
+                            Google
+                        </button>
+                        <button
+                            class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <i class="fab fa-github text-gray-900 mr-2"></i>
+                            GitHub
+                        </button>
+                    </div>
+
+                    <div class="mt-6 relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-gray-50 text-gray-500">Or continue with email</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <form class="mt-8 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <div class="relative">
+                                <input type="text" id="first-name"
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 peer"
+                                    placeholder=" ">
+                                <label for="first-name"
+                                    class="floating-label px-2.5 bg-white absolute left-4 top-3 text-gray-500 pointer-events-none">First
+                                    Name</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="relative">
+                                <input type="text" id="last-name"
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 peer"
+                                    placeholder=" ">
+                                <label for="last-name"
+                                    class="floating-label px-2.5 bg-white absolute left-4 top-3 text-gray-500 pointer-events-none">Last
+                                    Name</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="relative">
+                            <input type="email" id="email"
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 peer"
+                                placeholder=" ">
+                            <label for="email"
+                                class="floating-label px-2.5 bg-white absolute left-4 top-3 text-gray-500 pointer-events-none">Email
+                                Address</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="relative">
+                            <input type="password" id="password"
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 peer"
+                                placeholder=" ">
+                            <label for="password"
+                                class="floating-label px-2.5 bg-white absolute left-4 top-3 text-gray-500 pointer-events-none">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="relative">
+                            <input type="password" id="confirm-password"
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 peer"
+                                placeholder=" ">
+                            <label for="confirm-password"
+                                class="floating-label px-2.5 bg-white absolute left-4 top-3 text-gray-500 pointer-events-none">Confirm
+                                Password</label>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="terms" name="terms" type="checkbox"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a>
+                            and <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors shadow-lg">
+                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                                <i class="fas fa-user-plus text-blue-300 group-hover:text-blue-200"></i>
+                            </span>
+                            Create Account
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Already have an account?
+                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+                                Sign in
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side - Company Description with Tech Background -->
+        <div class="flex-1 tech-bg text-white flex items-center justify-center px-8 py-12 lg:px-12 lg:py-24">
+            <div class="max-w-lg w-full space-y-8 floating">
+                <!-- Company Logo -->
+                <div class="text-center lg:text-left">
+                    <div class="flex items-center justify-center lg:justify-start mb-6">
+                        <div
+                            class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mr-4 backdrop-blur-sm">
+                            <i class="fas fa-atom text-white text-2xl"></i>
+                        </div>
+                        <h1 class="text-4xl font-bold">TechFlow</h1>
+                    </div>
+                </div>
+
+                <!-- Company Description -->
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold leading-tight">
+                        Building the Future of <span class="text-yellow-300">Digital Innovation</span>
+                    </h2>
+
+                    <p class="text-xl leading-relaxed text-blue-100">
+                        Join over 50,000 developers, designers, and innovators who are shaping the next generation of
+                        technology solutions. We provide the tools and platform to turn your ideas into reality.
+                    </p>
+
+                    <!-- Features Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                        <div
+                            class="feature-card bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-3">
+                                <i class="fas fa-shield-alt text-white"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">Enterprise Security</h3>
+                            <p class="text-blue-100 text-sm">Military-grade encryption and security protocols</p>
+                        </div>
+
+                        <div
+                            class="feature-card bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                            <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-3">
+                                <i class="fas fa-bolt text-white"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">Lightning Fast</h3>
+                            <p class="text-blue-100 text-sm">Global CDN with 99.9% uptime guarantee</p>
+                        </div>
+
+                        <div
+                            class="feature-card bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                            <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mb-3">
+                                <i class="fas fa-code-branch text-white"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">Scalable Infrastructure</h3>
+                            <p class="text-blue-100 text-sm">Grow from startup to enterprise seamlessly</p>
+                        </div>
+
+                        <div
+                            class="feature-card bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                            <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center mb-3">
+                                <i class="fas fa-headset text-white"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">24/7 Support</h3>
+                            <p class="text-blue-100 text-sm">Expert technical support around the clock</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div
+                        class="flex flex-wrap justify-center lg:justify-start gap-6 mt-8 pt-6 border-t border-white border-opacity-20">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">50K+</div>
+                            <div class="text-blue-200 text-sm">Developers</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">150+</div>
+                            <div class="text-blue-200 text-sm">Countries</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">99.9%</div>
+                            <div class="text-blue-200 text-sm">Uptime</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">24/7</div>
+                            <div class="text-blue-200 text-sm">Support</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial -->
+                    <div
+                        class="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-quote-left text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Sarah Chen</div>
+                                <div class="text-blue-200 text-sm">CTO at InnovateTech</div>
+                            </div>
+                        </div>
+                        <p class="text-blue-100 italic">
+                            "TechFlow transformed how we build and deploy applications. The platform's scalability and
+                            developer experience are unmatched in the industry."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Form validation and interactivity
+            const form = document.querySelector('form');
+            const inputs = document.querySelectorAll('.input-field');
+            const submitButton = document.querySelector('button[type="submit"]');
+
+            // Add real-time validation
+            inputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    validateField(this);
+                });
+
+                input.addEventListener('blur', function () {
+                    validateField(this);
+                });
+            });
+
+            function validateField(field) {
+                const value = field.value.trim();
+                const fieldId = field.id;
+
+                // Remove any existing validation styles
+                field.classList.remove('border-red-300', 'border-green-300');
+
+                if (value === '') {
+                    field.classList.add('border-red-300');
+                    return false;
+                }
+
+                switch (fieldId) {
+                    case 'email':
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            field.classList.add('border-red-300');
+                            return false;
+                        }
+                        break;
+
+                    case 'password':
+                        if (value.length < 8) {
+                            field.classList.add('border-red-300');
+                            return false;
+                        }
+                        break;
+
+                    case 'confirm-password':
+                        const password = document.getElementById('password').value;
+                        if (value !== password) {
+                            field.classList.add('border-red-300');
+                            return false;
+                        }
+                        break;
+                }
+
+                field.classList.add('border-green-300');
+                return true;
+            }
+
+            // Form submission
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+                inputs.forEach(input => {
+                    if (!validateField(input)) {
+                        isValid = false;
+                    }
+                });
+
+                const terms = document.getElementById('terms');
+                if (!terms.checked) {
+                    isValid = false;
+                    terms.parentElement.classList.add('text-red-600');
+                } else {
+                    terms.parentElement.classList.remove('text-red-600');
+                }
+
+                if (isValid) {
+                    // Show loading state
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Creating Account...';
+                    submitButton.disabled = true;
+
+                    // Simulate API call
+                    setTimeout(() => {
+                        alert('Account created successfully! Welcome to TechFlow.');
+                        form.reset();
+                        submitButton.innerHTML = '<span class="absolute left-0 inset-y-0 flex items-center pl-3"><i class="fas fa-user-plus text-blue-300 group-hover:text-blue-200"></i></span>Create Account';
+                        submitButton.disabled = false;
+                    }, 2000);
+                } else {
+                    // Shake animation for error
+                    form.classList.add('animate-shake');
+                    setTimeout(() => {
+                        form.classList.remove('animate-shake');
+                    }, 500);
+                }
+            });
+
+            // Add shake animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    25% { transform: translateX(-5px); }
+                    75% { transform: translateX(5px); }
+                }
+                .animate-shake {
+                    animation: shake 0.5s ease-in-out;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</MainContainer>

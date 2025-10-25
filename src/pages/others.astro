@@ -1,0 +1,618 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+
+
+---
+<style is:inline>
+    .toast-container {
+        position: fixed;
+        z-index: 1000;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Position Classes */
+    .toast-container.top-right {
+        top: 20px;
+        right: 20px;
+        align-items: flex-end;
+    }
+
+    .toast-container.top-left {
+        top: 20px;
+        left: 20px;
+        align-items: flex-start;
+    }
+
+    .toast-container.bottom-right {
+        bottom: 20px;
+        right: 20px;
+        align-items: flex-end;
+    }
+
+    .toast-container.bottom-left {
+        bottom: 20px;
+        left: 20px;
+        align-items: flex-start;
+    }
+
+    .toast-container.top-center {
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        align-items: center;
+    }
+
+    .toast-container.bottom-center {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        align-items: center;
+    }
+
+    /* Toast Animations based on position */
+    .toast-container.top-right .toast,
+    .toast-container.top-center .toast,
+    .toast-container.top-left .toast {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    .toast-container.bottom-right .toast,
+    .toast-container.bottom-center .toast,
+    .toast-container.bottom-left .toast {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    .toast {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-left: 4px solid;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .toast.show {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+    }
+
+    .toast.hide {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    /* Position-specific hide animations */
+    .toast-container.top-right .toast.hide,
+    .toast-container.top-center .toast.hide,
+    .toast-container.top-left .toast.hide {
+        transform: translateY(-100px) scale(0.8);
+    }
+
+    .toast-container.bottom-right .toast.hide,
+    .toast-container.bottom-center .toast.hide,
+    .toast-container.bottom-left .toast.hide {
+        transform: translateY(100px) scale(0.8);
+    }
+
+    .toast.success {
+        border-left-color: #10b981;
+    }
+
+    .toast.error {
+        border-left-color: #ef4444;
+    }
+
+    .toast.warning {
+        border-left-color: #f59e0b;
+    }
+
+    .toast.info {
+        border-left-color: #3b82f6;
+    }
+
+    .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+    }
+
+    .toast.success .toast-icon {
+        background-color: #10b981;
+    }
+
+    .toast.error .toast-icon {
+        background-color: #ef4444;
+    }
+
+    .toast.warning .toast-icon {
+        background-color: #f59e0b;
+    }
+
+    .toast.info .toast-icon {
+        background-color: #3b82f6;
+    }
+
+    .toast-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .toast-title {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+
+    .toast-message {
+        color: #6b7280;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .toast-close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: color 0.2s ease;
+    }
+
+    .toast-close:hover {
+        color: #374151;
+        background-color: #f3f4f6;
+    }
+
+    .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: currentColor;
+        opacity: 0.3;
+        width: 100%;
+        transform-origin: left;
+        animation: progress linear forwards;
+    }
+
+    @keyframes progress {
+        from {
+            transform: scaleX(1);
+        }
+
+        to {
+            transform: scaleX(0);
+        }
+    }
+
+    .position-option {
+        transition: all 0.2s ease;
+    }
+
+    .position-option:hover {
+        transform: translateY(-2px);
+    }
+
+    .position-option.active {
+        background-color: #3b82f6 !important;
+        color: white !important;
+        border-color: #3b82f6 !important;
+    }
+
+    .dashboard-card {
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<AdminLayout PageTitle="Template" PageHeader="Template" UserName="Bishal Biswas">
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container top-right"></div>
+
+    <!-- Dashboard Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Toast Notification</h1>
+                    <p class="text-gray-600">Custom Toast Notification using JavaScript.</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="show-notifications"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                        Show Notifications
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Toast Position Controls -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Toast Position Settings</h2>
+            <p class="text-gray-600 mb-6">Choose where you want your toast notifications to appear:</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+                <button onclick="changeToastPosition('top-right')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm active">
+                    <i class="fas fa-arrow-up-right mr-2"></i>Top Right
+                </button>
+                <button onclick="changeToastPosition('top-center')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm">
+                    <i class="fas fa-arrow-up mr-2"></i>Top Center
+                </button>
+                <button onclick="changeToastPosition('top-left')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm">
+                    <i class="fas fa-arrow-up-left mr-2"></i>Top Left
+                </button>
+                <button onclick="changeToastPosition('bottom-left')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm">
+                    <i class="fas fa-arrow-down-left mr-2"></i>Bottom Left
+                </button>
+                <button onclick="changeToastPosition('bottom-center')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm">
+                    <i class="fas fa-arrow-down mr-2"></i>Bottom Center
+                </button>
+                <button onclick="changeToastPosition('bottom-right')"
+                    class="position-option bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-sm">
+                    <i class="fas fa-arrow-down-right mr-2"></i>Bottom Right
+                </button>
+            </div>
+
+            <!-- Toast Demo Controls -->
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Toast Notification Demo</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                <button onclick="showSuccessToast()"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center">
+                    <i class="fas fa-check-circle mr-2"></i> Success
+                </button>
+                <button onclick="showErrorToast()"
+                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i> Error
+                </button>
+                <button onclick="showWarningToast()"
+                    class="bg-yellow-600 hover:bg-yellow-700 text-white px-4py-3 rounded-lg font-medium flex items-center justify-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> Warning
+                </button>
+                <button onclick="showInfoToast()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center">
+                    <i class="fas fa-info-circle mr-2"></i> Info
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="showCustomToast()"
+                    class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium">
+                    Custom Toast
+                </button>
+                <button onclick="clearAllToasts()"
+                    class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg font-medium">
+                    Clear All
+                </button>
+            </div>
+        </div>
+        
+        <!-- Sample Actions that Trigger Toasts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+                <div class="space-y-4">
+                    <button onclick="simulateUserRegistration()"
+                        class="w-full text-left p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Register New User</h4>
+                                <p class="text-gray-600 text-sm">Add a new user to the system</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </div>
+                    </button>
+                    <button onclick="simulateOrderProcessing()"
+                        class="w-full text-left p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Process Orders</h4>
+                                <p class="text-gray-600 text-sm">Process pending orders</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </div>
+                    </button>
+                    <button onclick="simulateDataExport()"
+                        class="w-full text-left p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Export Data</h4>
+                                <p class="text-gray-600 text-sm">Export dashboard data</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">System Status</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                            <span class="text-green-800">All systems operational</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>
+                            <span class="text-yellow-800">Scheduled maintenance in 2 hours</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 mr-3"></i>
+                            <span class="text-blue-800">New features available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script is:inline>
+        // Toast Notification System with Position Support
+        class ToastSystem {
+            constructor() {
+                this.container = document.getElementById('toast-container');
+                this.toasts = new Set();
+                this.currentPosition = 'top-right';
+            }
+
+            setPosition(position) {
+                // Remove all position classes
+                this.container.className = 'toast-container';
+                // Add new position class
+                this.container.classList.add(position);
+                this.currentPosition = position;
+
+                // Update active state in position buttons
+                document.querySelectorAll('.position-option').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`button[onclick="changeToastPosition('${position}')"]`).classList.add('active');
+            }
+
+            show(options) {
+                const {
+                    type = 'info',
+                    title = '',
+                    message = '',
+                    duration = 5000,
+                    dismissible = true
+                } = options;
+
+                // Create toast element
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <i class="fas ${this.getIcon(type)}"></i>
+                    </div>
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    ${dismissible ? '<button class="toast-close"><i class="fas fa-times"></i></button>' : ''}
+                    ${duration > 0 ? `<div class="progress-bar" style="animation-duration: ${duration}ms"></div>` : ''}
+                `;
+
+                // Add to container based on position
+                if (this.currentPosition.includes('bottom')) {
+                    this.container.appendChild(toast);
+                } else {
+                    this.container.insertBefore(toast, this.container.firstChild);
+                }
+
+                this.toasts.add(toast);
+
+                // Show animation
+                setTimeout(() => toast.classList.add('show'), 10);
+
+                // Auto remove if duration is set
+                if (duration > 0) {
+                    setTimeout(() => this.remove(toast), duration);
+                }
+
+                // Close button event
+                if (dismissible) {
+                    const closeBtn = toast.querySelector('.toast-close');
+                    closeBtn.addEventListener('click', () => this.remove(toast));
+                }
+
+                return toast;
+            }
+
+            remove(toast) {
+                if (!this.toasts.has(toast)) return;
+
+                toast.classList.remove('show');
+                toast.classList.add('hide');
+
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                    this.toasts.delete(toast);
+                }, 300);
+            }
+
+            clearAll() {
+                this.toasts.forEach(toast => this.remove(toast));
+            }
+
+            getIcon(type) {
+                const icons = {
+                    success: 'fa-check',
+                    error: 'fa-exclamation',
+                    warning: 'fa-exclamation-triangle',
+                    info: 'fa-info'
+                };
+                return icons[type] || 'fa-info';
+            }
+        }
+
+        // Initialize toast system
+        const toastSystem = new ToastSystem();
+
+        // Position Change Function
+        function changeToastPosition(position) {
+            toastSystem.setPosition(position);
+
+            // Show a confirmation toast in the new position
+            toastSystem.show({
+                type: 'info',
+                title: 'Position Changed',
+                message: `Toasts will now appear in the ${position.replace('-', ' ')}`,
+                duration: 3000
+            });
+        }
+
+        // Demo Functions
+        function showSuccessToast() {
+            toastSystem.show({
+                type: 'success',
+                title: 'Success!',
+                message: 'Your action was completed successfully.',
+                duration: 5000
+            });
+        }
+
+        function showErrorToast() {
+            toastSystem.show({
+                type: 'error',
+                title: 'Error!',
+                message: 'Something went wrong. Please try again.',
+                duration: 6000
+            });
+        }
+
+        function showWarningToast() {
+            toastSystem.show({
+                type: 'warning',
+                title: 'Warning!',
+                message: 'This action cannot be undone.',
+                duration: 7000
+            });
+        }
+
+        function showInfoToast() {
+            toastSystem.show({
+                type: 'info',
+                title: 'Information',
+                message: 'Here is some important information for you.',
+                duration: 4000
+            });
+        }
+
+        function showCustomToast() {
+            toastSystem.show({
+                type: 'info',
+                title: 'Custom Notification',
+                message: 'This is a custom toast with different settings.',
+                duration: 8000,
+                dismissible: true
+            });
+        }
+
+        function clearAllToasts() {
+            toastSystem.clearAll();
+        }
+
+        // Simulated Actions
+        function simulateUserRegistration() {
+            toastSystem.show({
+                type: 'success',
+                title: 'User Registered',
+                message: 'New user has been successfully added to the system.',
+                duration: 4000
+            });
+        }
+
+        function simulateOrderProcessing() {
+            toastSystem.show({
+                type: 'info',
+                title: 'Processing Orders',
+                message: 'Processing 15 pending orders...',
+                duration: 3000
+            });
+
+            // Simulate completion after delay
+            setTimeout(() => {
+                toastSystem.show({
+                    type: 'success',
+                    title: 'Orders Processed',
+                    message: 'All orders have been successfully processed.',
+                    duration: 4000
+                });
+            }, 2000);
+        }
+
+        function simulateDataExport() {
+            toastSystem.show({
+                type: 'info',
+                title: 'Export Started',
+                message: 'Preparing your data for export...',
+                duration: 2000
+            });
+
+            setTimeout(() => {
+                toastSystem.show({
+                    type: 'success',
+                    title: 'Export Complete',
+                    message: 'Your data has been exported successfully.',
+                    duration: 4000
+                });
+            }, 1500);
+        }
+
+        // Show notifications on button click
+        document.getElementById('show-notifications').addEventListener('click', function () {
+            showSuccessToast();
+            setTimeout(showInfoToast, 500);
+            setTimeout(showWarningToast, 1000);
+            setTimeout(showErrorToast, 1500);
+        });
+
+        // Auto-show welcome notification
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => {
+                toastSystem.show({
+                    type: 'info',
+                    title: 'Welcome to Dashboard',
+                    message: 'You can change toast position using the controls above.',
+                    duration: 6000
+                });
+            }, 1000);
+        });
+    </script>
+</AdminLayout>

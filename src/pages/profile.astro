@@ -1,0 +1,382 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+---
+
+<style is:inline>
+    .settings-section {
+        transition: all 0.3s ease;
+    }
+
+    .settings-section:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-button {
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toggle-checkbox:checked {
+        right: 0;
+        border-color: #3b82f6;
+    }
+
+    .toggle-checkbox:checked+.toggle-label {
+        background-color: #3b82f6;
+    }
+</style>
+<AdminLayout PageTitle="Settings" PageHeader="Settings" UserName="Bishal Biswas">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Profile Settings</h1>
+                    <p class="text-gray-600">Manage your account preferences and security</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center">
+                        <i class="fas fa-times mr-2"></i> Cancel
+                    </button>
+                    <button id="save-settings" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
+                        <i class="fas fa-save mr-2"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Settings Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Profile Settings</h3>
+                    <nav class="space-y-2">
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 active" data-tab="profile">
+                            <i class="fas fa-user mr-3"></i> Profile Information
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100" data-tab="password">
+                            <i class="fas fa-lock mr-3"></i> Password & Security
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100" data-tab="preferences">
+                            <i class="fas fa-cog mr-3"></i> Preferences
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100" data-tab="notifications">
+                            <i class="fas fa-bell mr-3"></i> Notifications
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100" data-tab="billing">
+                            <i class="fas fa-credit-card mr-3"></i> Billing
+                        </button>
+                    </nav>
+
+                    <!-- Account Status -->
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h4 class="text-sm font-medium text-gray-800 mb-2">Account Status</h4>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Verified</span>
+                            <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                                <i class="fas fa-check-circle mr-1"></i> Active
+                            </span>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-500">
+                            Member since June 2022
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="lg:col-span-3">
+                <!-- Profile Information -->
+                <div id="profile" class="tab-content hover:-translate-y-0.5 hover:shadow-sm active fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-card">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Profile Information</h2>
+                        
+                        <!-- Avatar Section -->
+                        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8 mb-8">
+                            <div class="flex-shrink-0">
+                                <div class="relative">
+                                    <img class="w-32 h-32 rounded-full border-4 border-white shadow-lg" 
+                                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                                         alt="Profile picture">
+                                    <div class="absolute bottom-2 right-2">
+                                        <label for="avatar-upload" class="avatar-upload cursor-pointer w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-blue-700">
+                                            <i class="fas fa-camera text-sm"></i>
+                                        </label>
+                                        <input type="file" id="avatar-upload" class="hidden" accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-medium text-gray-800 mb-2">Profile Picture</h3>
+                                <p class="text-gray-600 mb-4">Recommended: Square JPG, PNG or GIF, at least 500x500 pixels</p>
+                                <div class="flex space-x-3">
+                                    <label for="avatar-upload" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer">
+                                        Upload New Photo
+                                    </label>
+                                    <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                                        Remove Photo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">First Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="John">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Last Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="Doe">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="john.doe@example.com">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Phone Number</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="+1 (555) 123-4567">
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Bio</label>
+                            <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Tell us about yourself...">Senior Product Designer with 8+ years of experience. Passionate about creating user-centered designs and solving complex problems.</textarea>
+                            <p class="text-gray-500 text-sm mt-2">Brief description for your profile. URLs are hyperlinked.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Job Title</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="Senior Product Designer">
+                            </div>
+                            <div class="input-group">
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Department</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="Design Team">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password & Security -->
+                <div id="password" class="tab-content hover:-translate-y-0.5 hover:shadow-sm fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-card">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Password & Security</h2>
+                        
+                        <!-- Current Password -->
+                        <div class="input-group mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Current Password</label>
+                            <div class="relative">
+                                <input type="password" id="current-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10">
+                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 toggle-password" data-target="current-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="input-group mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">New Password</label>
+                            <div class="relative">
+                                <input type="password" id="new-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10">
+                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 toggle-password" data-target="new-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <div class="password-strength w-full bg-gray-200 rounded-full h-2">
+                                    <div class="h-2 rounded-full bg-red-500" style="width: 30%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>Password strength: Weak</span>
+                                    <span>0/4 criteria</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="input-group mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Confirm New Password</label>
+                            <div class="relative">
+                                <input type="password" id="confirm-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10">
+                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 toggle-password" data-target="confirm-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Password Requirements -->
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                            <h4 class="font-medium text-gray-800 mb-3">Password Requirements</h4>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    At least 8 characters
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    One uppercase letter
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    One lowercase letter
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-times text-red-500 mr-2"></i>
+                                    One number or special character
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="border-t border-gray-200 pt-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-lg font-medium text-gray-800">Two-Factor Authentication</h3>
+                                    <p class="text-gray-600 text-sm">Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <span class="relative w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></span>
+                                </label>
+                            </div>
+                            <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                                Configure 2FA
+                            </button>
+                        </div>
+
+                        <!-- Update Password Button -->
+                        <div class="mt-8">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center">
+                                <i class="fas fa-key mr-2"></i> Update Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences -->
+                <div id="preferences" class="tab-content hover:-translate-y-0.5 hover:shadow-sm fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-card">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Preferences</h2>
+                        <!-- Preferences content would go here -->
+                        <p class="text-gray-600">Language, theme, and other preference settings.</p>
+                    </div>
+                </div>
+
+                <!-- Additional tabs would continue here... -->
+
+                <!-- Notifications -->
+                <div id="notifications" class="tab-content hover:-translate-y-0.5 hover:shadow-sm fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-card">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Notification Settings</h2>
+                        <!-- Notifications content would go here -->
+                        <p class="text-gray-600">Email and push notification preferences.</p>
+                    </div>
+                </div>
+
+                <!-- Billing -->
+                <div id="billing" class="tab-content hover:-translate-y-0.5 hover:shadow-sm fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-card">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Billing Information</h2>
+                        <!-- Billing content would go here -->
+                        <p class="text-gray-600">Payment methods and billing history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button and target content
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // Toggle switch functionality
+            document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const label = this.nextElementSibling;
+                    const span = label.querySelector('span');
+
+                    if (this.checked) {
+                        span.style.transform = 'translateX(1.5rem)';
+                    } else {
+                        span.style.transform = 'translateX(0)';
+                    }
+                });
+            });
+
+            // Save settings button
+            document.getElementById('save-settings').addEventListener('click', function () {
+                // In a real application, you would collect all form data and send to server
+                const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+                alert(`Settings for ${activeTab} have been saved successfully!`);
+
+                // Show loading state
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Saving...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 1500);
+            });
+
+            // Initialize toggle switches
+            document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+                if (checkbox.checked) {
+                    const span = checkbox.nextElementSibling.querySelector('span');
+                    span.style.transform = 'translateX(1.5rem)';
+                }
+            });
+        });
+    </script>
+</AdminLayout>

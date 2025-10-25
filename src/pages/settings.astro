@@ -1,0 +1,532 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+---
+
+<style is:inline>
+    .settings-section {
+        transition: all 0.3s ease;
+    }
+
+    .settings-section:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-button {
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toggle-checkbox:checked {
+        right: 0;
+        border-color: #3b82f6;
+    }
+
+    .toggle-checkbox:checked+.toggle-label {
+        background-color: #3b82f6;
+    }
+</style>
+<AdminLayout PageTitle="Settings" PageHeader="Settings" UserName="Bishal Biswas">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Settings</h1>
+                    <p class="text-gray-600">Manage your website configuration and preferences</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button
+                        class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center">
+                        <i class="fas fa-download mr-2"></i> Export Settings
+                    </button>
+                    <button id="save-settings"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
+                        <i class="fas fa-save mr-2"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Settings Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Configuration</h3>
+                    <nav class="space-y-2">
+                        <button
+                            class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 active"
+                            data-tab="general">
+                            <i class="fas fa-cog mr-3"></i> General Settings
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="ecommerce">
+                            <i class="fas fa-shopping-cart mr-3"></i> E-commerce
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="payment">
+                            <i class="fas fa-credit-card mr-3"></i> Payment Methods
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="shipping">
+                            <i class="fas fa-shipping-fast mr-3"></i> Shipping & Delivery
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="email">
+                            <i class="fas fa-envelope mr-3"></i> Email Settings
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="seo">
+                            <i class="fas fa-search mr-3"></i> SEO & Analytics
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="security">
+                            <i class="fas fa-shield-alt mr-3"></i> Security
+                        </button>
+                        <button class="tab-button w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+                            data-tab="maintenance">
+                            <i class="fas fa-tools mr-3"></i> Maintenance
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="lg:col-span-3">
+                <!-- General Settings -->
+                <div id="general" class="tab-content hover:-translate-y-0.5 hover:shadow-sm active">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">General Settings</h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Site Title</label>
+                                <input type="text"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value="My Awesome Store">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Site Tagline</label>
+                                <input type="text"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value="Quality Products at Great Prices">
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Site Description</label>
+                            <textarea
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                rows="3">We offer the best products with excellent customer service and fast shipping.</textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Admin Email</label>
+                                <input type="email"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value="admin@myawesomestore.com">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2">Contact Phone</label>
+                                <input type="tel"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value="+1 (555) 123-4567">
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Address</label>
+                            <textarea
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                rows="2">123 Business Street, Suite 100, New York, NY 10001</textarea>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Timezone</label>
+                            <select
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option>UTC-5 (Eastern Time)</option>
+                                <option>UTC-6 (Central Time)</option>
+                                <option>UTC-7 (Mountain Time)</option>
+                                <option selected>UTC-8 (Pacific Time)</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Date Format</label>
+                            <select
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option>MM/DD/YYYY</option>
+                                <option selected>DD/MM/YYYY</option>
+                                <option>YYYY-MM-DD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-commerce Settings -->
+                <div id="ecommerce" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">E-commerce Settings</h2>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Enable
+                                        E-commerce</label>
+                                    <p class="text-gray-500 text-sm">Turn on online shopping functionality</p>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Currency</label>
+                                    <select
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option>USD ($)</option>
+                                        <option>EUR (€)</option>
+                                        <option>GBP (£)</option>
+                                        <option selected>CAD ($)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Currency
+                                        Position</label>
+                                    <select
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option selected>Left ($100)</option>
+                                        <option>Right (100$)</option>
+                                        <option>Left with space ($ 100)</option>
+                                        <option>Right with space (100 $)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Tax Rate (%)</label>
+                                    <input type="number"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        value="13.0" step="0.1">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Minimum Order
+                                        Amount</label>
+                                    <input type="number"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        value="25.00" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Guest Checkout</label>
+                                    <p class="text-gray-500 text-sm">Allow customers to checkout without creating an
+                                        account</p>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Inventory
+                                        Management</label>
+                                    <p class="text-gray-500 text-sm">Track product stock levels automatically</p>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div id="payment" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Payment Methods</h2>
+
+                        <div class="space-y-6">
+                            <!-- Credit Card -->
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-credit-card text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Credit/Debit Cards</h3>
+                                        <p class="text-gray-500 text-sm">Accept Visa, Mastercard, American Express</p>
+                                    </div>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- PayPal -->
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                        <i class="fab fa-paypal text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">PayPal</h3>
+                                        <p class="text-gray-500 text-sm">Fast and secure PayPal payments</p>
+                                    </div>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Stripe -->
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                        <i class="fab fa-stripe text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Stripe</h3>
+                                        <p class="text-gray-500 text-sm">Modern payment processing</p>
+                                    </div>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only">
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Bank Transfer -->
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-university text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Bank Transfer</h3>
+                                        <p class="text-gray-500 text-sm">Direct bank transfers</p>
+                                    </div>
+                                </div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="toggle-checkbox sr-only">
+                                    <span
+                                        class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                        <span
+                                            class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h3 class="text-lg font-medium text-gray-800 mb-4">Payment Security</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-medium mb-1">Enable SSL</label>
+                                        <p class="text-gray-500 text-sm">Secure all transactions with SSL encryption</p>
+                                    </div>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                        <span
+                                            class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                            <span
+                                                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-medium mb-1">3D Secure</label>
+                                        <p class="text-gray-500 text-sm">Extra security layer for card payments</p>
+                                    </div>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="toggle-checkbox sr-only" checked>
+                                        <span
+                                            class="toggle-label relative w-12 h-6 bg-gray-200 rounded-full transition-colors">
+                                            <span
+                                                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional tabs would continue here... -->
+
+                <!-- Shipping & Delivery -->
+                <div id="shipping" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Shipping & Delivery</h2>
+                        <p class="text-gray-600 mb-6">Configure your shipping methods, rates, and delivery options.</p>
+                        <!-- Shipping settings content would go here -->
+                    </div>
+                </div>
+
+                <!-- Email Settings -->
+                <div id="email" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Email Settings</h2>
+                        <p class="text-gray-600 mb-6">Configure email templates, SMTP settings, and notifications.</p>
+                        <!-- Email settings content would go here -->
+                    </div>
+                </div>
+
+                <!-- SEO & Analytics -->
+                <div id="seo" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">SEO & Analytics</h2>
+                        <p class="text-gray-600 mb-6">Optimize your site for search engines and track visitor analytics.
+                        </p>
+                        <!-- SEO settings content would go here -->
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div id="security" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Security Settings</h2>
+                        <p class="text-gray-600 mb-6">Configure security measures and access controls.</p>
+                        <!-- Security settings content would go here -->
+                    </div>
+                </div>
+
+                <!-- Maintenance -->
+                <div id="maintenance" class="tab-content hover:-translate-y-0.5 hover:shadow-sm">
+                    <div class="bg-white rounded-xl shadow-sm p-6 settings-section">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Maintenance Mode</h2>
+                        <p class="text-gray-600 mb-6">Take your site offline for maintenance.</p>
+                        <!-- Maintenance settings content would go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button and target content
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // Toggle switch functionality
+            document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const label = this.nextElementSibling;
+                    const span = label.querySelector('span');
+
+                    if (this.checked) {
+                        span.style.transform = 'translateX(1.5rem)';
+                    } else {
+                        span.style.transform = 'translateX(0)';
+                    }
+                });
+            });
+
+            // Save settings button
+            document.getElementById('save-settings').addEventListener('click', function () {
+                // In a real application, you would collect all form data and send to server
+                const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+                alert(`Settings for ${activeTab} have been saved successfully!`);
+
+                // Show loading state
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Saving...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 1500);
+            });
+
+            // Initialize toggle switches
+            document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+                if (checkbox.checked) {
+                    const span = checkbox.nextElementSibling.querySelector('span');
+                    span.style.transform = 'translateX(1.5rem)';
+                }
+            });
+        });
+    </script>
+</AdminLayout>

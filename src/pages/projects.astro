@@ -1,0 +1,515 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+
+
+---
+
+<AdminLayout PageTitle="Tasks" PageHeader="Tasks Management" UserName="Bishal Biswas">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Task Management</h1>
+                <p class="text-gray-600">Manage your projects and tasks efficiently</p>
+            </div>
+            <div class="flex space-x-3">
+                <button
+                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center">
+                    <i class="fas fa-filter mr-2"></i> Filter
+                </button>
+                <button id="new-task-btn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
+                    <i class="fas fa-plus mr-2"></i> New Task
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <!-- Project Header -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                <div class="mb-4 lg:mb-0">
+                    <h2 class="text-xl font-semibold text-gray-800">Website Redesign Project</h2>
+                    <p class="text-gray-600">Complete redesign of company website with modern UI/UX</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-gray-800">68%</p>
+                        <p class="text-sm text-gray-600">Completed</p>
+                    </div>
+                    <div class="w-48 bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-600 h-2 rounded-full progress-bar" style="width: 68%"></div>
+                    </div>
+                    <div class="avatar-group">
+                        <img class="avatar"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="Team member">
+                        <img class="avatar"
+                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="Team member">
+                        <img class="avatar"
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="Team member">
+                        <div
+                            class="avatar bg-gray-300 text-gray-600 flex items-center justify-center text-xs font-medium">
+                            +2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Board -->
+        <div class="task-board grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- To Do Column -->
+            <div class="task-column bg-gray-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800 flex items-center">
+                        <span class="w-3 h-3 bg-gray-400 rounded-full mr-2"></span>
+                        To Do
+                        <span class="ml-2 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">5</span>
+                    </h3>
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="space-y-3 min-h-10" data-status="todo" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    <!-- Task Cards -->
+                    <div class="task-card bg-white p-4 rounded-lg shadow-sm border-l-4 priority-high" draggable="true"
+                        ondragstart="drag(event)" id="task-1">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800">Design Homepage Layout</h4>
+                            <div class="flex space-x-1">
+                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">High</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Create wireframes and mockups for the homepage</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>Jun 20</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-comment mr-1"></i>
+                                <span>3</span>
+                                <i class="fas fa-paperclip ml-2 mr-1"></i>
+                                <span>2</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="avatar-group">
+                                <img class="avatar"
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="Assignee">
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Design</span>
+                        </div>
+                    </div>
+
+                    <div class="task-card bg-white p-4 rounded-lg shadow-sm border-l-4 priority-medium" draggable="true"
+                        ondragstart="drag(event)" id="task-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800">Content Strategy</h4>
+                            <div class="flex space-x-1">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Medium</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Plan content structure and SEO strategy</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>Jun 25</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-comment mr-1"></i>
+                                <span>1</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="avatar-group">
+                                <img class="avatar"
+                                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="Assignee">
+                            </div>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Content</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="task-column bg-gray-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800 flex items-center">
+                        <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                        In Progress
+                        <span class="ml-2 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">3</span>
+                    </h3>
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="space-y-3 min-h-10" data-status="in-progress" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    <div class="task-card bg-white p-4 rounded-lg shadow-sm border-l-4 priority-high" draggable="true"
+                        ondragstart="drag(event)" id="task-3">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800">Develop Header Component</h4>
+                            <div class="flex space-x-1">
+                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">High</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Implement responsive navigation header</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>Jun 18</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-comment mr-1"></i>
+                                <span>5</span>
+                                <i class="fas fa-paperclip ml-2 mr-1"></i>
+                                <span>3</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="avatar-group">
+                                <img class="avatar"
+                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="Assignee">
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Column -->
+            <div class="task-column bg-gray-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800 flex items-center">
+                        <span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>
+                        Review
+                        <span class="ml-2 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">2</span>
+                    </h3>
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="space-y-3 min-h-10" data-status="review" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    <div class="task-card bg-white p-4 rounded-lg shadow-sm border-l-4 priority-medium" draggable="true"
+                        ondragstart="drag(event)" id="task-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800">Mobile Responsiveness</h4>
+                            <div class="flex space-x-1">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Medium</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Test and fix mobile layout issues</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>Jun 22</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-comment mr-1"></i>
+                                <span>2</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="avatar-group">
+                                <img class="avatar"
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="Assignee">
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Column -->
+            <div class="task-column bg-gray-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800 flex items-center">
+                        <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                        Done
+                        <span class="ml-2 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">4</span>
+                    </h3>
+                    <button class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="space-y-3 min-h-10" data-status="done" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    <div class="task-card bg-white p-4 rounded-lg shadow-sm border-l-4 priority-low" draggable="true"
+                        ondragstart="drag(event)" id="task-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800">Project Setup</h4>
+                            <div class="flex space-x-1">
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Low</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">Initialize project repository and setup CI/CD</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>Jun 10</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="avatar-group">
+                                <img class="avatar"
+                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="Assignee">
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Task Modal -->
+    <div id="task-modal" class="fixed inset-0 backdrop-blur bg-[#00000099] bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800">Create New Task</h3>
+            </div>
+            <form id="task-form" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Task Title</label>
+                    <input type="text"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter task title" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+                    <textarea rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Task description"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Priority</label>
+                        <select
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Status</label>
+                        <select
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="todo">To Do</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="review">Review</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Due Date</label>
+                        <input type="date"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Category</label>
+                        <select
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="design">Design</option>
+                            <option value="development">Development</option>
+                            <option value="content">Content</option>
+                            <option value="testing">Testing</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Assign To</label>
+                    <select
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="john">John Doe</option>
+                        <option value="jane">Jane Smith</option>
+                        <option value="mike">Mike Johnson</option>
+                    </select>
+                </div>
+            </form>
+            <div class="p-6 border-t border-gray-200 flex justify-end space-x-3">
+                <button id="cancel-task"
+                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button id="save-task"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                    Create Task
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        // Drag and Drop functionality
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add('task-drag-over');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('task-drag-over');
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            ev.currentTarget.appendChild(draggedElement);
+
+            // Update task status based on the column
+            const newStatus = ev.currentTarget.getAttribute('data-status');
+            updateTaskStatus(data, newStatus);
+        }
+
+        function updateTaskStatus(taskId, newStatus) {
+            // In a real application, you would update the task status in your database
+            console.log(`Task ${taskId} moved to ${newStatus}`);
+        }
+
+        // Remove drag-over class when leaving drop zone
+        document.querySelectorAll('[data-status]').forEach(column => {
+            column.addEventListener('dragleave', function (e) {
+                this.classList.remove('task-drag-over');
+            });
+        });
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // New Task Button
+            document.getElementById('new-task-btn').addEventListener('click', function () {
+                document.getElementById('task-modal').classList.remove('hidden');
+            });
+
+            // Cancel Task Button
+            document.getElementById('cancel-task').addEventListener('click', function () {
+                document.getElementById('task-modal').classList.add('hidden');
+                document.getElementById('task-form').reset();
+            });
+
+            // Save Task Button
+            document.getElementById('save-task').addEventListener('click', function () {
+                const form = document.getElementById('task-form');
+                const title = form.querySelector('input[type="text"]').value;
+
+                if (title) {
+                    // In a real application, you would save the task to your database
+                    alert(`Task "${title}" created successfully!`);
+                    document.getElementById('task-modal').classList.add('hidden');
+                    form.reset();
+                } else {
+                    alert('Please fill in the task title');
+                }
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('task-modal').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.classList.add('hidden');
+                }
+            });
+
+            // Task card click to view details (placeholder)
+            document.querySelectorAll('.task-card').forEach(card => {
+                card.addEventListener('click', function (e) {
+                    if (!e.target.closest('button')) {
+                        // In a real application, you would show a task detail view
+                        console.log('View task details:', this.id);
+                    }
+                });
+            });
+        });
+    </script>
+</AdminLayout>
+
+<style is:inline>
+    .task-board {
+        min-height: 600px;
+    }
+
+    .task-column {
+        min-height: 500px;
+        transition: all 0.3s ease;
+    }
+
+    .task-card {
+        transition: all 0.2s ease;
+        cursor: grab;
+    }
+
+    .task-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-card:active {
+        cursor: grabbing;
+    }
+
+    .priority-high {
+        border-left: 4px solid #ef4444;
+    }
+
+    .priority-medium {
+        border-left: 4px solid #f59e0b;
+    }
+
+    .priority-low {
+        border-left: 4px solid #10b981;
+    }
+
+    .status-todo {
+        background-color: #f3f4f6;
+    }
+
+    .status-in-progress {
+        background-color: #dbeafe;
+    }
+
+    .status-review {
+        background-color: #fef3c7;
+    }
+
+    .status-done {
+        background-color: #d1fae5;
+    }
+
+    .task-drag-over {
+        background-color: #f0f9ff;
+        border: 2px dashed #3b82f6;
+    }
+
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+
+    .avatar-group {
+        display: flex;
+    }
+
+    .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid white;
+        margin-left: -8px;
+    }
+
+    .avatar:first-child {
+        margin-left: 0;
+    }
+</style>

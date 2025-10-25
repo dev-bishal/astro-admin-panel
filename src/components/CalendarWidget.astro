@@ -1,0 +1,409 @@
+---
+
+---
+
+<style is:inline>
+    .calendar-widget {
+        transition: all 0.3s ease;
+    }
+
+    .calendar-day {
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .calendar-day:hover {
+        background-color: #3b82f6;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .calendar-day.today {
+        background-color: #3b82f6;
+        color: white;
+        font-weight: 600;
+    }
+
+    .calendar-day.selected {
+        background-color: #1e40af;
+        color: white;
+        font-weight: 600;
+    }
+
+    .calendar-day.other-month {
+        color: #9ca3af;
+    }
+
+    .calendar-day.has-event::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: #ef4444;
+    }
+
+    .event-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+</style>
+<!-- Calendar Widget -->
+<div class="calendar-widget w-full bg-white rounded-xl shadow-sm p-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+        <button id="widget-prev-month" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">
+            <i class="fas fa-chevron-left text-sm"></i>
+        </button>
+
+        <h3 id="widget-current-month" class="text-lg font-semibold text-gray-800">June 2023</h3>
+
+            <button id="widget-next-month" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+    </div>
+
+    <!-- Week Days -->
+    <div class="grid grid-cols-7 gap-1 mb-2">
+        <div class="text-center text-xs font-medium text-gray-500 py-1">S</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">M</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">T</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">W</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">T</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">F</div>
+        <div class="text-center text-xs font-medium text-gray-500 py-1">S</div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div id="widget-calendar-days" class="grid grid-cols-7 gap-1">
+        <!-- Calendar days will be populated by JavaScript -->
+    </div>
+
+    <!-- Selected Date Info -->
+    <div class="mt-4 pt-4 border-t border-gray-200">
+        <div class="flex items-center justify-between mb-2">
+            <h4 class="text-sm font-medium text-gray-800" id="widget-selected-date">Today, Jun 15</h4>
+            <button id="widget-today-btn" class="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                Today
+            </button>
+        </div>
+
+        <!-- Events for Selected Date -->
+        <div id="widget-day-events" class="space-y-2 max-h-8 overflow-y-auto">
+            <!-- Events will be populated here -->
+        </div>
+
+        <!-- Add Event Button -->
+        <button id="widget-add-event"
+            class="w-full mt-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium flex items-center justify-center">
+            <i class="fas fa-plus mr-2 text-xs"></i> Add Event
+        </button>
+    </div>
+</div>
+
+<!-- Add Event Modal -->
+<div id="widget-event-modal"
+    class="fixed inset-0 backdrop-blur bg-[#00000099] bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl max-w-xs w-full">
+        <div class="p-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800">Add Event</h3>
+        </div>
+        <form id="widget-event-form" class="p-4 space-y-3">
+            <div>
+                <label class="block text-gray-700 text-xs font-medium mb-1">Event Title</label>
+                <input type="text"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="Meeting title" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-xs font-medium mb-1">Date</label>
+                <input type="date"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    required>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-gray-700 text-xs font-medium mb-1">Start</label>
+                    <input type="time"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-xs font-medium mb-1">End</label>
+                    <input type="time"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                </div>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-xs font-medium mb-1">Type</label>
+                <select
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <option value="meeting">Meeting</option>
+                    <option value="personal">Personal</option>
+                    <option value="deadline">Deadline</option>
+                </select>
+            </div>
+        </form>
+        <div class="p-4 border-t border-gray-200 flex justify-end space-x-2">
+            <button id="widget-cancel-event"
+                class="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                Cancel
+            </button>
+            <button id="widget-save-event"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    // Sample events data with fixed dates
+    const widgetEvents = [
+        {
+            id: 1,
+            title: "Team Meeting",
+            date: "2025-10-15",
+            time: "10:00",
+            type: "meeting"
+        },
+        {
+            id: 2,
+            title: "Lunch with Client",
+            date: "2025-10-15",
+            time: "12:30",
+            type: "meeting"
+        },
+        {
+            id: 3,
+            title: "Project Deadline",
+            date: "2025-10-20",
+            time: "17:00",
+            type: "deadline"
+        },
+        {
+            id: 4,
+            title: "Dentist Appointment",
+            date: "2025-10-22",
+            time: "14:00",
+            type: "personal"
+        },
+        {
+            id: 5,
+            title: "Conference Call",
+            date: "2025-10-25",
+            time: "15:30",
+            type: "meeting"
+        }
+    ];
+
+    // Event type colors
+    const eventTypeColors = {
+        meeting: "bg-blue-500",
+        personal: "bg-green-500",
+        deadline: "bg-red-500"
+    };
+
+    // Create date without timezone issues
+    function createLocalDate(year, month, day) {
+        return new Date(year, month, day);
+    }
+
+    // Get today's date without time
+    function getToday() {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    // Format date to YYYY-MM-DD without timezone issues
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // Format date for display
+    function formatWidgetDate(date) {
+        const today = getToday();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        if (formatDate(date) === formatDate(today)) {
+            return "Today";
+        } else if (formatDate(date) === formatDate(tomorrow)) {
+            return "Tomorrow";
+        } else {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString(undefined, options);
+        }
+    }
+
+    // Get events for a specific date
+    function getWidgetEventsForDate(date) {
+        const dateStr = formatDate(date);
+        return widgetEvents.filter(event => event.date === dateStr);
+    }
+
+    let widgetCurrentDate = getToday();
+    let widgetSelectedDate = getToday();
+
+    // Generate calendar for a specific month
+    function generateWidgetCalendar(year, month) {
+        const calendarDays = document.getElementById('widget-calendar-days');
+        calendarDays.innerHTML = '';
+
+        const firstDay = createLocalDate(year, month, 1);
+        const lastDay = createLocalDate(year, month + 1, 0);
+        const startingDay = firstDay.getDay();
+        const daysInMonth = lastDay.getDate();
+
+        // Previous month days
+        const prevMonthLastDay = createLocalDate(year, month, 0).getDate();
+        for (let i = startingDay - 1; i >= 0; i--) {
+            const day = prevMonthLastDay - i;
+            const date = createLocalDate(year, month - 1, day);
+            const dayElement = createWidgetDayElement(date, true);
+            calendarDays.appendChild(dayElement);
+        }
+
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = createLocalDate(year, month, day);
+            const dayElement = createWidgetDayElement(date, false);
+            calendarDays.appendChild(dayElement);
+        }
+
+        // Next month days
+        const totalCells = 42; // 6 weeks
+        const remainingCells = totalCells - (startingDay + daysInMonth);
+        for (let day = 1; day <= remainingCells; day++) {
+            const date = createLocalDate(year, month + 1, day);
+            const dayElement = createWidgetDayElement(date, true);
+            calendarDays.appendChild(dayElement);
+        }
+
+        // Update month header
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        document.getElementById('widget-current-month').textContent = `${monthNames[month]} ${year}`;
+
+        // Update selected date display
+        updateWidgetSelectedDateDisplay();
+    }
+
+    // Create day element for widget
+    function createWidgetDayElement(date, isOtherMonth) {
+        const dayElement = document.createElement('div');
+        const day = date.getDate();
+        const dateStr = formatDate(date);
+        const today = getToday();
+        const isToday = formatDate(date) === formatDate(today);
+        const isSelected = formatDate(date) === formatDate(widgetSelectedDate);
+        const hasEvents = getWidgetEventsForDate(date).length > 0;
+
+        dayElement.className = `calendar-day relative text-center py-2 rounded-lg text-sm ${isOtherMonth ? 'other-month' : ''} ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${hasEvents ? 'has-event' : ''}`;
+        dayElement.setAttribute('data-date', dateStr);
+        dayElement.textContent = day;
+
+        // Add click event
+        dayElement.addEventListener('click', () => {
+            widgetSelectedDate = date;
+            generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+        });
+
+        return dayElement;
+    }
+
+    // Update selected date display
+    function updateWidgetSelectedDateDisplay() {
+        document.getElementById('widget-selected-date').textContent = formatWidgetDate(widgetSelectedDate);
+
+        // Update day events
+        const dayEventsContainer = document.getElementById('widget-day-events');
+        dayEventsContainer.innerHTML = '';
+
+        const dayEvents = getWidgetEventsForDate(widgetSelectedDate);
+        if (dayEvents.length === 0) {
+            dayEventsContainer.innerHTML = '<p class="text-gray-500 text-xs text-center py-2">No events</p>';
+        } else {
+            dayEvents.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.className = 'flex items-center p-2 bg-gray-50 rounded text-xs';
+                eventElement.innerHTML = `
+                        <div class="event-dot ${eventTypeColors[event.type]} mr-2"></div>
+                        <div class="flex-1 truncate">
+                            <span class="font-medium text-gray-800">${event.title}</span>
+                        </div>
+                        <div class="text-gray-500 ml-2">${event.time}</div>
+                    `;
+                dayEventsContainer.appendChild(eventElement);
+            });
+        }
+    }
+
+    // Initialize widget calendar
+    document.addEventListener('DOMContentLoaded', function () {
+        generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+
+        // Previous month button
+        document.getElementById('widget-prev-month').addEventListener('click', function () {
+            widgetCurrentDate.setMonth(widgetCurrentDate.getMonth() - 1);
+            generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+        });
+
+        // Next month button
+        document.getElementById('widget-next-month').addEventListener('click', function () {
+            widgetCurrentDate.setMonth(widgetCurrentDate.getMonth() + 1);
+            generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+        });
+
+        // Today button
+        document.getElementById('widget-today-btn').addEventListener('click', function () {
+            widgetCurrentDate = getToday();
+            widgetSelectedDate = getToday();
+            generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+        });
+
+        // Add event button
+        document.getElementById('widget-add-event').addEventListener('click', function () {
+            document.getElementById('widget-event-modal').classList.remove('hidden');
+            const form = document.getElementById('widget-event-form');
+            form.querySelector('input[type="date"]').value = formatDate(widgetSelectedDate);
+        });
+
+        // Cancel event button
+        document.getElementById('widget-cancel-event').addEventListener('click', function () {
+            document.getElementById('widget-event-modal').classList.add('hidden');
+            document.getElementById('widget-event-form').reset();
+        });
+
+        // Save event button
+        document.getElementById('widget-save-event').addEventListener('click', function () {
+            const form = document.getElementById('widget-event-form');
+            const title = form.querySelector('input[type="text"]').value;
+            const date = form.querySelector('input[type="date"]').value;
+
+            if (title && date) {
+                // In a real application, you would save the event to your database
+                alert(`Event "${title}" added!`);
+                document.getElementById('widget-event-modal').classList.add('hidden');
+                form.reset();
+
+                // Refresh calendar to show new event
+                generateWidgetCalendar(widgetCurrentDate.getFullYear(), widgetCurrentDate.getMonth());
+            } else {
+                alert('Please fill in all required fields');
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('widget-event-modal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+    });
+</script>

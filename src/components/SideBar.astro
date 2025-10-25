@@ -1,0 +1,247 @@
+---
+
+---
+
+<div class="sidebar flex flex-col justify-between bg-blue-800 text-white w-64 py-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0"
+    id="sidebar">
+    <div class="top space-y-6">
+        <!-- Logo -->
+        <div class="text-white flex items-center space-x-2 px-4">
+            <i class="fas fa-tachometer-alt fa-2x"></i>
+            <span class="text-2xl font-extrabold">AdminPanel</span>
+        </div>
+    
+        <!-- Navigation -->
+        <nav class="space-y-1">
+            <a href="/"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="dashboard" aria-current="page">
+                <i class="fas fa-home mr-2"></i>
+                Dashboard
+            </a>
+    
+            <!-- Articles with Submenu -->
+            <div class="articles-menu">
+                <a href="/articles"
+                    class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center justify-between nav-link"
+                    data-page="articles" id="articles-main-link">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-newspaper mr-2"></i>
+                        Articles
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200" id="articles-chevron"></i>
+                </a>
+    
+                <!-- Submenu -->
+                <div class="articles-submenu ml-4 mt-1 space-y-1 hidden" id="articles-submenu">
+                    <a href="/articles"
+                        class="py-2 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center text-sm submenu-link"
+                        data-page="articles-all">
+                        <i class="fas fa-list mr-2"></i>
+                        All Articles
+                    </a>
+                    <a href="/articles/new"
+                        class="py-2 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center text-sm submenu-link"
+                        data-page="articles-new" aria-current="page">
+                        <i class="fas fa-plus mr-2"></i>
+                        New Article
+                    </a>
+                    <a href="/articles/categories"
+                        class="py-2 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center text-sm submenu-link"
+                        data-page="articles-categories">
+                        <i class="fas fa-tags mr-2"></i>
+                        Categories
+                    </a>
+                </div>
+            </div>
+    
+            <a href="/users"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="users">
+                <i class="fas fa-users mr-2"></i>
+                Users
+            </a>
+            <a href="/products"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="products">
+                <i class="fas fa-box mr-2"></i>
+                Products
+            </a>
+            <a href="/schedule"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="schedule">
+                <i class="fa-solid fa-calendar-days mr-2"></i>
+                Calendar
+            </a>
+            <a href="/projects"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="projects">
+                <i class="fa-solid fa-list-check mr-2"></i>
+                Projects
+            </a>
+            <a href="/orders"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="orders">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Orders
+            </a>
+            <a href="/analytics"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="analytics">
+                <i class="fas fa-chart-line mr-2"></i>
+                Analytics
+            </a>
+            <a href="/messages"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="messages">
+                <i class="fa-solid fa-message mr-2"></i>
+                Messages
+            </a>
+            <a href="/settings"
+                class="py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center nav-link"
+                data-page="settings">
+                <i class="fas fa-cog mr-2"></i>
+                Settings
+            </a>
+        </nav>
+    </div>
+
+    <div class="bg-blue-700 rounded-xl shadow-sm p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                <i class="fa-solid fa-code text-xl"></i>
+            </div>
+            <div class="ml-4">
+                <p class="text-gray-200">Made by</p>
+                <a href="https://bishalbiswas.dev/" class="text-xl font-bold">Bishal Biswas</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Toggle Articles submenu
+        const articlesMainLink = document.getElementById('articles-main-link');
+        const articlesSubmenu = document.getElementById('articles-submenu');
+        const articlesChevron = document.getElementById('articles-chevron');
+
+        if (articlesMainLink && articlesSubmenu) {
+            articlesMainLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                articlesSubmenu.classList.toggle('hidden');
+                articlesChevron.classList.toggle('rotate-180');
+            });
+        }
+
+        // Set active page based on current URL or data attribute
+        function setActivePage() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            const submenuLinks = document.querySelectorAll('.submenu-link');
+
+            // Remove all active states first
+            navLinks.forEach(link => {
+                link.classList.remove('bg-blue-700', 'text-white');
+                link.removeAttribute('aria-current');
+            });
+
+            submenuLinks.forEach(link => {
+                link.classList.remove('bg-blue-700', 'text-white');
+                link.removeAttribute('aria-current');
+            });
+
+            // Check main navigation links
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath || currentPath.startsWith(href) && href !== '/') {
+                    link.classList.add('bg-blue-700', 'text-white');
+                    link.setAttribute('aria-current', 'page');
+
+                    // If it's the articles page, open the submenu
+                    if (href === '/articles' || currentPath.startsWith('/articles')) {
+                        articlesSubmenu.classList.remove('hidden');
+                        articlesChevron.classList.add('rotate-180');
+                    }
+                }
+            });
+
+            // Check submenu links
+            submenuLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath) {
+                    link.classList.add('bg-blue-700', 'text-white');
+                    link.setAttribute('aria-current', 'page');
+
+                    // Ensure articles submenu is open when a subpage is active
+                    articlesSubmenu.classList.remove('hidden');
+                    articlesChevron.classList.add('rotate-180');
+                }
+            });
+
+            // Fallback: check data-page attribute
+            if (currentPath === '/') {
+                const dashboardLink = document.querySelector('[data-page="dashboard"]');
+                if (dashboardLink) {
+                    dashboardLink.classList.add('bg-blue-700', 'text-white');
+                    dashboardLink.setAttribute('aria-current', 'page');
+                }
+            }
+        }
+
+        // Initialize active page
+        setActivePage();
+
+        // Optional: Update active page when navigating (for SPA-like behavior)
+        document.querySelectorAll('.nav-link, .submenu-link').forEach(link => {
+            link.addEventListener('click', function () {
+                // Remove all active states
+                document.querySelectorAll('.nav-link, .submenu-link').forEach(item => {
+                    item.classList.remove('bg-blue-700', 'text-white');
+                    item.removeAttribute('aria-current');
+                });
+
+                // Add active state to clicked link
+                this.classList.add('bg-blue-700', 'text-white');
+                this.setAttribute('aria-current', 'page');
+
+                // If it's an articles submenu link, ensure submenu is open
+                if (this.classList.contains('submenu-link')) {
+                    articlesSubmenu.classList.remove('hidden');
+                    articlesChevron.classList.add('rotate-180');
+                }
+            });
+        });
+    });
+</script>
+
+<style is:inline>
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    /* Smooth transitions for submenu */
+    .articles-submenu {
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Ensure proper spacing for submenu items */
+    .submenu-link {
+        padding-left: 2rem;
+    }
+
+    /* Active state styles */
+    /* darker blue for active state */
+    /* .nav-link[aria-current="page"],
+    .submenu-link[aria-current="page"] {
+        background-color: #1db322;
+        color: white;
+    } */
+
+    /* Hover states */
+    /* .nav-link:hover,
+    .submenu-link:hover {
+        background-color: #1e40af;
+        color: white;
+    } */
+</style>

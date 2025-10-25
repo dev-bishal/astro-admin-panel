@@ -1,0 +1,555 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+
+
+---
+
+<AdminLayout PageTitle="Calendar" PageHeader="Calendar Schedule" UserName="Bishal Biswas">
+    <div class="mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Calendar</h1>
+        <p class="text-gray-600 mb-8">Manage your schedule and events</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Calendar -->
+            <div class="lg:col-span-2">
+                <div class="calendar-container bg-white rounded-xl shadow-sm overflow-hidden">
+                    <!-- Calendar Header -->
+                    <div class="bg-white p-6 border-b border-gray-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                                <h2 id="current-month" class="text-2xl font-bold text-gray-800 min-w-[190px]">June 2023</h2>
+                                <div class="flex space-x-1">
+                                    <button id="prev-month" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button id="next-month" class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="today-btn"
+                                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                                    Today
+                                </button>
+                                <div class="relative">
+                                    <select id="view-selector"
+                                        class="appearance-none bg-white pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <option value="month">Month</option>
+                                        <option value="week">Week</option>
+                                        <option value="day">Day</option>
+                                    </select>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <button id="add-event-btn"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center">
+                                    <i class="fas fa-plus mr-2"></i> Add Event
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week Days Header -->
+                    <div class="bg-gray-50 border-b border-gray-200">
+                        <div class="calendar-grid grid grid-cols-7 gap-px">
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Sun</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Mon</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Tue</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Wed</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Thu</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Fri</div>
+                            <div class="p-4 text-center text-sm font-medium text-gray-500">Sat</div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Days -->
+                    <div id="calendar-days" class="calendar-grid bg-gray-100  grid grid-cols-7 gap-px">
+                        <!-- Calendar days will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar - Events & Details -->
+            <div class="space-y-6">
+                <!-- Selected Date Info -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4" id="selected-date-title">Today</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-2xl font-bold text-gray-800" id="selected-date">June 15, 2023</p>
+                            <p class="text-gray-600" id="selected-day">Thursday</p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-200">
+                            <p class="text-sm text-gray-500 mb-2">Events for this day:</p>
+                            <div id="day-events" class="space-y-2">
+                                <!-- Events will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Upcoming Events</h3>
+                    <div id="upcoming-events" class="space-y-3">
+                        <!-- Upcoming events will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Calendar Stats</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <p class="text-2xl font-bold text-blue-600" id="events-count">12</p>
+                            <p class="text-sm text-blue-600">Total Events</p>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <p class="text-2xl font-bold text-green-600" id="upcoming-count">5</p>
+                            <p class="text-sm text-green-600">This Month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div id="event-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800">Add New Event</h3>
+            </div>
+            <form id="event-form" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Event Title</label>
+                    <input type="text" id="event-title"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Meeting with team" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Start Date</label>
+                        <input type="date" id="event-start"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">End Date</label>
+                        <input type="date" id="event-end"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Event Type</label>
+                    <select id="event-type"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="meeting">Meeting</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="deadline">Deadline</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+                    <textarea id="event-description" rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Event details..."></textarea>
+                </div>
+            </form>
+            <div class="p-6 border-t border-gray-200 flex justify-end space-x-3">
+                <button id="cancel-event"
+                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button id="save-event"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                    Save Event
+                </button>
+            </div>
+        </div>
+    </div>
+<style is:inline>
+    .calendar-day {
+        transition: all 0.2s ease;
+    }
+
+    .calendar-day:hover {
+        background-color: #f3f4f6;
+        transform: scale(1.05);
+    }
+
+    .calendar-day.today {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .calendar-day.selected {
+        background-color: #1e40af;
+        color: white;
+    }
+
+    .calendar-day.other-month {
+        color: #9ca3af;
+    }
+
+    .calendar-event {
+        font-size: 0.75rem;
+        padding: 2px 4px;
+        margin: 1px 0;
+        border-radius: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .event-indicator {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 2px;
+    }
+
+    .calendar-container {
+        transition: all 0.3s ease;
+    }
+</style>
+    <script is:inline>
+        // Sample events data
+        const events = [
+            {
+                id: 1,
+                title: "Team Meeting",
+                start: "2025-10-15",
+                end: "2025-10-15",
+                type: "meeting",
+                description: "Weekly team sync meeting"
+            },
+            {
+                id: 2,
+                title: "Project Deadline",
+                start: "2025-10-20",
+                end: "2025-10-20",
+                type: "deadline",
+                description: "Submit final project deliverables"
+            },
+            {
+                id: 3,
+                title: "Client Presentation",
+                start: "2025-10-18",
+                end: "2025-10-18",
+                type: "work",
+                description: "Present quarterly results to client"
+            },
+            {
+                id: 4,
+                title: "Doctor Appointment",
+                start: "2025-10-22",
+                end: "2025-10-22",
+                type: "personal",
+                description: "Annual health checkup"
+            },
+            {
+                id: 5,
+                title: "Conference Call",
+                start: "2025-10-25",
+                end: "2025-10-25",
+                type: "meeting",
+                description: "International partners call"
+            },
+            {
+                id: 6,
+                title: "Birthday Party",
+                start: "2025-10-30",
+                end: "2025-10-30",
+                type: "personal",
+                description: "John's birthday celebration"
+            }
+        ];
+
+        // Event type colors
+        const eventColors = {
+            meeting: "bg-blue-100 text-blue-800 border-blue-200",
+            personal: "bg-green-100 text-green-800 border-green-200",
+            work: "bg-purple-100 text-purple-800 border-purple-200",
+            deadline: "bg-red-100 text-red-800 border-red-200"
+        };
+
+        // Event type indicators
+        const eventIndicators = {
+            meeting: "bg-blue-500",
+            personal: "bg-green-500",
+            work: "bg-purple-500",
+            deadline: "bg-red-500"
+        };
+
+        let currentDate = new Date();
+        let selectedDate = new Date();
+
+        // Format date to YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Format date for display
+        function formatDisplayDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString(undefined, options);
+        }
+
+        // Get events for a specific date
+        function getEventsForDate(date) {
+            const dateStr = formatDate(date);
+            return events.filter(event => event.start === dateStr);
+        }
+
+        // Get upcoming events (next 7 days)
+        function getUpcomingEvents() {
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+
+            return events.filter(event => {
+                const eventDate = new Date(event.start);
+                return eventDate >= today && eventDate <= nextWeek;
+            }).sort((a, b) => new Date(a.start) - new Date(b.start));
+        }
+
+        // Generate calendar for a specific month
+        function generateCalendar(year, month) {
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startingDay = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+
+            // Previous month days
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = startingDay - 1; i >= 0; i--) {
+                const day = prevMonthLastDay - i;
+                const date = new Date(year, month - 1, day);
+                const dayElement = createDayElement(date, true);
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayElement = createDayElement(date, false);
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Next month days
+            const totalCells = 42; // 6 weeks
+            const remainingCells = totalCells - (startingDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const date = new Date(year, month + 1, day);
+                const dayElement = createDayElement(date, true);
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Update month header
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
+
+            // Update selected date display
+            updateSelectedDateDisplay();
+        }
+
+        // Create day element
+        function createDayElement(date, isOtherMonth) {
+            const dayElement = document.createElement('div');
+            const day = date.getDate();
+            const dateStr = formatDate(date);
+            const today = new Date();
+            const isToday = formatDate(date) === formatDate(today);
+            const isSelected = formatDate(date) === formatDate(selectedDate);
+
+            dayElement.className = `calendar-day p-3 min-h-24 bg-white ${isOtherMonth ? 'other-month' : ''} ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`;
+            dayElement.setAttribute('data-date', dateStr);
+
+            // Day number
+            const dayNumber = document.createElement('div');
+            dayNumber.className = 'text-sm font-medium mb-1';
+            dayNumber.textContent = day;
+            dayElement.appendChild(dayNumber);
+
+            // Events for this day
+            const dayEvents = getEventsForDate(date);
+            if (dayEvents.length > 0) {
+                const eventsContainer = document.createElement('div');
+                eventsContainer.className = 'space-y-1';
+
+                dayEvents.slice(0, 2).forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = `calendar-event ${eventColors[event.type]} border`;
+                    eventElement.textContent = event.title;
+                    eventsContainer.appendChild(eventElement);
+                });
+
+                if (dayEvents.length > 2) {
+                    const moreEvents = document.createElement('div');
+                    moreEvents.className = 'text-xs text-gray-500';
+                    moreEvents.textContent = `+${dayEvents.length - 2} more`;
+                    eventsContainer.appendChild(moreEvents);
+                }
+
+                dayElement.appendChild(eventsContainer);
+            }
+
+            // Add click event
+            dayElement.addEventListener('click', () => {
+                selectedDate = date;
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            return dayElement;
+        }
+
+        // Update selected date display
+        function updateSelectedDateDisplay() {
+            document.getElementById('selected-date').textContent = formatDisplayDate(selectedDate);
+            document.getElementById('selected-date-title').textContent =
+                formatDate(selectedDate) === formatDate(new Date()) ? 'Today' : 'Selected Date';
+
+            // Update day events
+            const dayEventsContainer = document.getElementById('day-events');
+            dayEventsContainer.innerHTML = '';
+
+            const dayEvents = getEventsForDate(selectedDate);
+            if (dayEvents.length === 0) {
+                dayEventsContainer.innerHTML = '<p class="text-gray-500 text-sm">No events scheduled</p>';
+            } else {
+                dayEvents.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'flex items-center p-3 bg-gray-50 rounded-lg';
+                    eventElement.innerHTML = `
+                        <div class="event-indicator ${eventIndicators[event.type]}"></div>
+                        <div class="flex-1">
+                            <p class="font-medium text-gray-800">${event.title}</p>
+                            <p class="text-sm text-gray-600">${event.description}</p>
+                        </div>
+                    `;
+                    dayEventsContainer.appendChild(eventElement);
+                });
+            }
+
+            // Update upcoming events
+            updateUpcomingEvents();
+
+            // Update stats
+            updateStats();
+        }
+
+        // Update upcoming events
+        function updateUpcomingEvents() {
+            const upcomingEventsContainer = document.getElementById('upcoming-events');
+            upcomingEventsContainer.innerHTML = '';
+
+            const upcomingEvents = getUpcomingEvents();
+            if (upcomingEvents.length === 0) {
+                upcomingEventsContainer.innerHTML = '<p class="text-gray-500 text-sm">No upcoming events</p>';
+            } else {
+                upcomingEvents.forEach(event => {
+                    const eventDate = new Date(event.start);
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'flex items-center p-3 border border-gray-200 rounded-lg';
+                    eventElement.innerHTML = `
+                        <div class="event-indicator ${eventIndicators[event.type]}"></div>
+                        <div class="flex-1 ml-3">
+                            <p class="font-medium text-gray-800">${event.title}</p>
+                            <p class="text-sm text-gray-600">${eventDate.toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    upcomingEventsContainer.appendChild(eventElement);
+                });
+            }
+        }
+
+        // Update calendar stats
+        function updateStats() {
+            const totalEvents = events.length;
+            const thisMonthEvents = events.filter(event => {
+                const eventDate = new Date(event.start);
+                return eventDate.getMonth() === currentDate.getMonth() &&
+                    eventDate.getFullYear() === currentDate.getFullYear();
+            }).length;
+
+            document.getElementById('events-count').textContent = totalEvents;
+            document.getElementById('upcoming-count').textContent = thisMonthEvents;
+        }
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', function () {
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+            // Previous month button
+            document.getElementById('prev-month').addEventListener('click', function () {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            // Next month button
+            document.getElementById('next-month').addEventListener('click', function () {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            // Today button
+            document.getElementById('today-btn').addEventListener('click', function () {
+                currentDate = new Date();
+                selectedDate = new Date();
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            // View selector
+            document.getElementById('view-selector').addEventListener('change', function () {
+                alert(`View changed to: ${this.value}`);
+                // In a real implementation, you would change the calendar view here
+            });
+
+            // Add event button
+            document.getElementById('add-event-btn').addEventListener('click', function () {
+                document.getElementById('event-modal').classList.remove('hidden');
+                document.getElementById('event-start').value = formatDate(selectedDate);
+                document.getElementById('event-end').value = formatDate(selectedDate);
+            });
+
+            // Cancel event button
+            document.getElementById('cancel-event').addEventListener('click', function () {
+                document.getElementById('event-modal').classList.add('hidden');
+                document.getElementById('event-form').reset();
+            });
+
+            // Save event button
+            document.getElementById('save-event').addEventListener('click', function () {
+                const title = document.getElementById('event-title').value;
+                const start = document.getElementById('event-start').value;
+                const end = document.getElementById('event-end').value;
+                const type = document.getElementById('event-type').value;
+                const description = document.getElementById('event-description').value;
+
+                if (title && start && end) {
+                    // In a real application, you would save the event to your database
+                    alert(`Event "${title}" saved successfully!`);
+                    document.getElementById('event-modal').classList.add('hidden');
+                    document.getElementById('event-form').reset();
+
+                    // Refresh calendar to show new event
+                    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                } else {
+                    alert('Please fill in all required fields');
+                }
+            });
+        });
+    </script>
+</AdminLayout>

@@ -1,0 +1,69 @@
+---
+import AdminLayout from "../Layout/AdminLayout.astro";
+
+
+---
+
+<AdminLayout PageTitle="Products" PageHeader="Products" UserName="Bishal Biswas">
+    <!-- Products Page -->
+    <div class="page" id="products">
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Product Management</h2>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Add Product
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="border border-[#e5e7eb] rounded-lg overflow-hidden">
+                    <div class="h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                            alt="Product" class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">Nike Running Shoes</h3>
+                        <p class="text-gray-600 mt-1">Men's running shoes for everyday use</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-bold">$129.99</span>
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">In
+                                Stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-[#e5e7eb] rounded-lg overflow-hidden">
+                    <div class="h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                            alt="Product" class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">Smart Watch</h3>
+                        <p class="text-gray-600 mt-1">Feature-rich smartwatch with health monitoring</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-bold">$249.99</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Low
+                                Stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-[#e5e7eb] rounded-lg overflow-hidden">
+                    <div class="h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                            alt="Product" class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">Wireless Headphones</h3>
+                        <p class="text-gray-600 mt-1">Noise cancelling wireless headphones</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-bold">$179.99</span>
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">In
+                                Stock</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</AdminLayout>

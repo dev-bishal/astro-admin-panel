@@ -1,0 +1,361 @@
+---
+import AdminLayout from "../../Layout/AdminLayout.astro";
+---
+<style is:inline>
+    .ce-header {
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .ce-header h1 {
+        font-size: 2.25rem;
+    }
+
+    .ce-header h2 {
+        font-size: 1.875rem;
+    }
+
+    .ce-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .tag-chip {
+        transition: all 0.2s;
+    }
+
+    .tag-chip:hover {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .image-upload-container {
+        transition: all 0.3s;
+    }
+
+    .image-upload-container:hover {
+        border-color: #3b82f6;
+    }
+
+    .editor-container {
+        min-height: 400px;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+</style>
+<AdminLayout PageTitle="Article Editor" PageHeader="Article Editor" UserName="Bishal Biswas">
+
+    <!-- Main Content -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column - Article Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Title -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="article-title">Article
+                            Title</label>
+                        <input type="text" id="article-title"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Enter article title">
+                    </div>
+
+                    <!-- Slug -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="article-slug">Slug</label>
+                        <input type="text" id="article-slug"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="article-url-slug">
+                        <p class="text-gray-500 text-sm mt-1">https://yoursite.com/articles/<span
+                                id="slug-preview">article-url-slug</span></p>
+                    </div>
+
+                    <!-- Editor.js Container -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Content</label>
+                        <div id="editorjs" class="editor-container"></div>
+                    </div>
+
+                    <!-- Meta Description -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="meta-description">Meta
+                            Description</label>
+                        <textarea id="meta-description" rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Brief description for search engines"></textarea>
+                        <p class="text-gray-500 text-sm mt-1">Recommended: 150-160 characters</p>
+                    </div>
+                </div>
+
+                <!-- Right Column - Settings -->
+                <div class="space-y-6">
+                    <div class="flex space-x-3 justify-end">
+                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Preview
+                        </button>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center">
+                            <i class="fas fa-save mr-2"></i> Save Article
+                        </button>
+                    </div>
+                    <!-- Publish Settings -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Publish Settings</h3>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Status</label>
+                            <div class="flex space-x-4">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio text-blue-600" name="status" checked>
+                                    <span class="ml-2">Published</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio text-blue-600" name="status">
+                                    <span class="ml-2">Draft</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="publish-date">Publish
+                                Date</label>
+                            <input type="datetime-local" id="publish-date"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+                            Save and Publish
+                        </button>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Featured Image</h3>
+
+                        <div
+                            class="image-upload-container border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer">
+                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                            <p class="text-sm text-gray-600">Click to upload or drag and drop</p>
+                            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (max. 5MB)</p>
+                            <input type="file" class="hidden" id="featured-image-upload">
+                        </div>
+
+                        <div id="image-preview" class="hidden mt-4">
+                            <img src="" alt="Featured image preview" class="rounded-lg max-h-48 mx-auto">
+                            <button class="mt-2 text-red-600 text-sm">
+                                <i class="fas fa-trash mr-1"></i> Remove image
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Categories</h3>
+
+                        <div class="mb-3">
+                            <select
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select a category</option>
+                                <option value="technology">Technology</option>
+                                <option value="business">Business</option>
+                                <option value="health">Health & Wellness</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="sports">Sports</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-700 mb-2">Most Used</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">Technology</span>
+                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">Business</span>
+                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">Health</span>
+                                <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">Entertainment</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Tags</h3>
+
+                        <div class="mb-3">
+                            <input type="text" id="tag-input"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Add new tag">
+                            <p class="text-gray-500 text-xs mt-1">Press Enter to add a tag</p>
+                        </div>
+
+                        <div id="tags-container" class="flex flex-wrap gap-2">
+                            <span
+                                class="tag-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center">
+                                technology <button class="ml-1 text-blue-600"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span
+                                class="tag-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center">
+                                web development <button class="ml-1 text-blue-600"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span
+                                class="tag-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center">
+                                javascript <button class="ml-1 text-blue-600"><i class="fas fa-times"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Editor.js -->
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Editor.js
+            const editor = new EditorJS({
+                holder: 'editorjs',
+                tools: {
+                    header: {
+                        class: Header,
+                        config: {
+                            placeholder: 'Enter a header',
+                            levels: [1, 2, 3, 4],
+                            defaultLevel: 2
+                        }
+                    },
+                    /* list: {
+                        class: List,
+                        inlineToolbar: true
+                    }, */
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: 'https://example.com/uploadFile', // Your backend file uploader endpoint
+                                byUrl: 'https://example.com/fetchUrl', // Your endpoint that fetches data from URL
+                            }
+                        }
+                    },
+                    embed: {
+                        class: Embed,
+                        config: {
+                            services: {
+                                youtube: true,
+                                coub: true
+                            }
+                        }
+                    },
+                    quote: {
+                        class: Quote,
+                        inlineToolbar: true,
+                        config: {
+                            quotePlaceholder: 'Enter a quote',
+                            captionPlaceholder: 'Quote\'s author',
+                        },
+                    },
+                    marker: {
+                        class: Marker,
+                        shortcut: 'CMD+SHIFT+M',
+                    },
+                    delimiter: {
+                        class: Delimiter,
+                    },
+                },
+                placeholder: 'Start writing your article here...',
+                autofocus: true
+            });
+
+            // Update slug preview as user types title
+            const titleInput = document.getElementById('article-title');
+            const slugInput = document.getElementById('article-slug');
+            const slugPreview = document.getElementById('slug-preview');
+
+            titleInput.addEventListener('input', function () {
+                const title = titleInput.value;
+                const slug = title.toLowerCase()
+                    .replace(/[^\w ]+/g, '')
+                    .replace(/ +/g, '-');
+
+                slugInput.value = slug;
+                slugPreview.textContent = slug;
+            });
+
+            slugInput.addEventListener('input', function () {
+                slugPreview.textContent = slugInput.value;
+            });
+
+            // Tag input functionality
+            const tagInput = document.getElementById('tag-input');
+            const tagsContainer = document.getElementById('tags-container');
+
+            tagInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && tagInput.value.trim() !== '') {
+                    e.preventDefault();
+
+                    const tagText = tagInput.value.trim();
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center';
+                    tagElement.innerHTML = `${tagText} <button class="ml-1 text-blue-600"><i class="fas fa-times"></i></button>`;
+
+                    tagsContainer.appendChild(tagElement);
+
+                    // Clear input
+                    tagInput.value = '';
+
+                    // Add event listener to remove button
+                    const removeBtn = tagElement.querySelector('button');
+                    removeBtn.addEventListener('click', function () {
+                        tagsContainer.removeChild(tagElement);
+                    });
+                }
+            });
+
+            // Featured image upload preview
+            const imageUpload = document.getElementById('featured-image-upload');
+            const imageUploadContainer = document.querySelector('.image-upload-container');
+            const imagePreview = document.getElementById('image-preview');
+            const imagePreviewImg = imagePreview.querySelector('img');
+
+            imageUploadContainer.addEventListener('click', function () {
+                imageUpload.click();
+            });
+
+            imageUpload.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        imagePreviewImg.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        imageUploadContainer.classList.add('hidden');
+                    };
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Remove image button
+            imagePreview.querySelector('button').addEventListener('click', function () {
+                imagePreview.classList.add('hidden');
+                imageUploadContainer.classList.remove('hidden');
+                imageUpload.value = '';
+            });
+
+            // Save article functionality
+            document.querySelector('button.bg-blue-600').addEventListener('click', function () {
+                editor.save().then((outputData) => {
+                    console.log('Article content: ', outputData);
+
+                    // In a real application, you would send this data to your server
+                    alert('Article saved successfully!');
+                }).catch((error) => {
+                    console.log('Saving failed: ', error);
+                });
+            });
+        });
+    </script>
+</AdminLayout>

@@ -1,0 +1,192 @@
+
+---
+import MainContainer from "../Layout/MainContainer.astro";
+
+
+---
+
+<MainContainer 
+    PageTitle="Login & Signup"
+    bodyClass="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <style>
+        .auth-container {
+            transition: transform 0.6s ease-in-out;
+        }
+        .auth-form {
+            transition: opacity 0.5s ease, transform 0.6s ease;
+        }
+        .login-container {
+            transform: translateX(0);
+        }
+        .signup-container {
+            transform: translateX(100%);
+        }
+        .active .login-container {
+            transform: translateX(-100%);
+        }
+        .active .signup-container {
+            transform: translateX(0);
+        }
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+
+    <img src="https://media.istockphoto.com/vectors/colorful-vector-design-template-vector-id1185206568?k=6&m=1185206568&s=612x612&w=0&h=gxkUeAfjMTRIk670MCA_Zwwrfo4-jpemY265uz1OlfA=" alt="Logo" class="rounded-full h-40 my-5">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-md">
+        <!-- Toggle Switch -->
+        <div class="flex relative bg-gray-100 rounded-t-lg overflow-hidden">
+            <div class="absolute top-0 left-0 w-1/2 h-full bg-blue-600 transition-transform duration-400 ease-in-out transform translate-x-0" id="slider"></div>
+            <button id="login-btn" class="w-1/2 py-4 relative z-10 text-white font-semibold">Login</button>
+            <button id="signup-btn" class="w-1/2 py-4 relative z-10 text-gray-700 font-semibold">Forgot Password</button>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="relative overflow-hidden" style="height: 500px;">
+            <!-- Login Form -->
+            <div class="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out opacity-100 transform translate-x-0" id="login-form">
+                <form class="px-8 pt-8">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Welcome Back</h2>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="login-email">Email</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input id="login-email" type="email" class="form-input pl-10 w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="login-password">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input id="login-password" type="password" class="form-input pl-10 w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none" placeholder="Enter your password">
+                        </div>
+                        <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 mb-4">
+                        Login
+                    </button>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        Can't remember password? <a href="#" class="text-blue-600 hover:underline font-medium switch-to-signup">Reset Password</a>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Forgot Password Form -->
+            <div class="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out opacity-0 transform translate-x-full" id="signup-form">
+                <form class="px-8 pt-8">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Reset Password</h2>
+                    <p class="text-gray-600 text-center mb-6">Enter your email address and we'll send you a link to reset your password.</p>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="forgot-email">Email</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input id="forgot-email" type="email" class="form-input pl-10 w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 mb-4">
+                        Send Reset Link
+                    </button>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        Remember your password? <a href="#" class="text-blue-600 hover:underline font-medium switch-to-login">Back to login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        
+        <!-- Social Login -->
+        <!-- <div class="px-8 py-6 bg-gray-50 border-t border-gray-200">
+            <div class="text-center text-gray-600 text-sm mb-4">Or continue with</div>
+            <div class="flex justify-center space-x-4">
+                <button class="p-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50">
+                    <i class="fab fa-google text-red-500"></i>
+                </button>
+                <button class="p-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50">
+                    <i class="fab fa-facebook-f text-blue-600"></i>
+                </button>
+                <button class="p-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50">
+                    <i class="fab fa-twitter text-blue-400"></i>
+                </button>
+            </div>
+        </div> -->
+    </div>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const slider = document.getElementById('slider');
+            const switchToSignup = document.querySelector('.switch-to-signup');
+            const switchToLogin = document.querySelector('.switch-to-login');
+            
+            // Switch to Signup
+            function showSignup() {
+                loginBtn.classList.remove('text-white');
+                loginBtn.classList.add('text-gray-700');
+                signupBtn.classList.remove('text-gray-700');
+                signupBtn.classList.add('text-white');
+                slider.style.transform = 'translateX(100%)';
+                loginForm.style.opacity = '0';
+                loginForm.style.transform = 'translateX(-100%)';
+                signupForm.style.opacity = '1';
+                signupForm.style.transform = 'translateX(0)';
+
+                signupForm.classList.remove("opacity-0");
+                signupForm.classList.remove("translate-x-full");
+            }
+            
+            // Switch to Login
+            function showLogin() {
+                signupBtn.classList.remove('text-white');
+                signupBtn.classList.add('text-gray-700');
+                loginBtn.classList.remove('text-gray-700');
+                loginBtn.classList.add('text-white');
+                slider.style.transform = 'translateX(0)';
+                signupForm.style.opacity = '0';
+                signupForm.style.transform = 'translateX(100%)';
+                loginForm.style.opacity = '1';
+                loginForm.style.transform = 'translateX(0)';
+
+                signupForm.classList.add("opacity-0");
+                signupForm.classList.add("translate-x-full");
+            }
+            
+            // Event listeners
+            signupBtn.addEventListener('click', showSignup);
+            switchToSignup.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSignup();
+            });
+            
+            loginBtn.addEventListener('click', showLogin);
+            switchToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLogin();
+            });
+            
+            // Form submission
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Form submitted successfully!');
+                });
+            });
+        });
+    </script>
+</MainContainer>

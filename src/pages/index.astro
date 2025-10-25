@@ -1,0 +1,294 @@
+---
+import CalendarWidget from "../components/CalendarWidget.astro";
+import ChartLine from "../components/ChartLine.astro";
+import ChartPie from "../components/ChartPie.astro";
+import AdminLayout from "../Layout/AdminLayout.astro";
+---
+<AdminLayout PageTitle="Home" PageHeader="Dashboard" UserName="Bishal Biswas">
+	<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<!-- Dashboard Page -->
+	<div class="page active" id="dashboard">
+
+		<div class="grid grid-row-1 lg:grid-cols-3 gap-6 mb-6">
+			<div class="bg-white rounded-lg shadow p-6 col-span-2 flex flex-wrap">
+				<span class="w-full flex">
+					<div class="flex justify-evenly flex-col gap-4 w-1/4">
+						<span>
+							<h3 class="text-xl font-semibold">Dashboard</h3>
+							<span class="text-gray-500">Overview of latest month</span>
+						</span>
+
+						<div class="ml-4">
+							<p class="text-gray-600">Total Users</p>
+							<h3 class="text-2xl font-bold">5,248</h3>
+						</div>
+
+						<div class="ml-4">
+							<p class="text-gray-600">Total Users</p>
+							<h3 class="text-2xl font-bold">5,248</h3>
+						</div>
+
+						<div class="ml-4">
+							<button class="text-white bg-linear-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 active:scale-95 font-medium rounded-lg px-5 py-2.5">Analytics Dashboard</button>
+						</div>
+
+					</div>
+
+					<div class="space-y-4 h-full w-3/4">
+						<div class="w-full h-full">
+							<ChartLine />
+						</div>
+					</div>
+				</span>
+
+				<span class="w-full flex gap-x-2 items-center justify-around">
+					<div class="bg-white rounded-lg shadow p-2 h-fit">
+						<div class="flex items-center">
+							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+								<i class="fas fa-users fa-2x"></i>
+							</div>
+							<div class="ml-4">
+								<p class="text-gray-600">Wallet Balance</p>
+								<h3 class="text-2xl font-bold">$5,248</h3>
+							</div>
+						</div>
+					</div>
+					<div class="bg-white rounded-lg shadow p-2 h-fit">
+						<div class="flex items-center">
+							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+								<i class="fas fa-users fa-2x"></i>
+							</div>
+							<div class="ml-4">
+								<p class="text-gray-600">Total Users</p>
+								<h3 class="text-2xl font-bold">5,248</h3>
+							</div>
+						</div>
+					</div>
+					<div class="bg-white rounded-lg shadow p-2 h-fit">
+						<div class="flex items-center">
+							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+								<i class="fas fa-users fa-2x"></i>
+							</div>
+							<div class="ml-4">
+								<p class="text-gray-600">Total Users</p>
+								<h3 class="text-2xl font-bold">5,248</h3>
+							</div>
+						</div>
+					</div>
+					<div class="bg-white rounded-lg shadow p-2 h-fit">
+						<div class="flex items-center">
+							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+								<i class="fas fa-users fa-2x"></i>
+							</div>
+							<div class="ml-4">
+								<p class="text-gray-600">Total Users</p>
+								<h3 class="text-2xl font-bold">5,248</h3>
+							</div>
+						</div>
+					</div>
+				</span>
+			</div>
+
+			<div class="bg-white rounded-lg shadow col-span-1">
+				<CalendarWidget />
+			</div>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+			<div class="bg-white rounded-lg shadow p-6">
+				<div class="flex items-center">
+					<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+						<i class="fas fa-users fa-2x"></i>
+					</div>
+					<div class="ml-4">
+						<p class="text-gray-600">Total Users</p>
+						<h3 class="text-2xl font-bold">5,248</h3>
+					</div>
+				</div>
+				<div class="mt-4">
+					<p class="text-blue-600 flex items-center">
+						<span class="flex items-center">
+							<i class="fas fa-arrow-up mr-1"></i> 12.5%
+						</span>
+						<span class="ml-2 text-gray-500">Since last month</span>
+					</p>
+				</div>
+			</div>
+
+			<div class="bg-white rounded-lg shadow p-6">
+				<div class="flex items-center">
+					<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+						<i class="fas fa-shopping-cart fa-2x"></i>
+					</div>
+					<div class="ml-4">
+						<p class="text-gray-600">Total Orders</p>
+						<h3 class="text-2xl font-bold">12,856</h3>
+					</div>
+				</div>
+				<div class="mt-4">
+					<p class="text-blue-600 flex items-center">
+						<span class="flex items-center">
+							<i class="fas fa-arrow-up mr-1"></i> 8.3%
+						</span>
+						<span class="ml-2 text-gray-500">Since last month</span>
+					</p>
+				</div>
+			</div>
+
+			<div class="bg-white rounded-lg shadow p-6">
+				<div class="flex items-center">
+					<div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+						<i class="fas fa-box fa-2x"></i>
+					</div>
+					<div class="ml-4">
+						<p class="text-gray-600">Total Products</p>
+						<h3 class="text-2xl font-bold">1,284</h3>
+					</div>
+				</div>
+				<div class="mt-4">
+					<p class="text-red-600 flex items-center">
+						<span class="flex items-center">
+							<i class="fas fa-arrow-down mr-1"></i> 3.2%
+						</span>
+						<span class="ml-2 text-gray-500">Since last month</span>
+					</p>
+				</div>
+			</div>
+
+			<div class="bg-white rounded-lg shadow p-6">
+				<div class="flex items-center">
+					<div class="p-3 rounded-full bg-red-100 text-red-600">
+						<i class="fas fa-dollar-sign fa-2x"></i>
+					</div>
+					<div class="ml-4">
+						<p class="text-gray-600">Revenue</p>
+						<h3 class="text-2xl font-bold">$46,258</h3>
+					</div>
+				</div>
+				<div class="mt-4">
+					<p class="text-blue-600 flex items-center">
+						<span class="flex items-center">
+							<i class="fas fa-arrow-up mr-1"></i> 17.9%
+						</span>
+						<span class="ml-2 text-gray-500">Since last month</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid grid-cols-2 lg:grid-cols-2 gap-6">
+
+			<div class="bg-white rounded-lg shadow p-6">
+				<h3 class="text-xl font-semibold mb-4">Traffic Sources</h3>
+				<div class="space-y-4">
+					<div class="h-[250px] w-full">
+						<ChartPie />
+					</div>
+				</div>
+			</div>
+
+			<div class="bg-white rounded-lg shadow p-6">
+				<h3 class="text-xl font-semibold mb-4">Traffic Sources</h3>
+				<div class="space-y-4">
+					<div>
+						<div class="flex justify-between mb-1">
+							<span>Direct</span>
+							<span>42%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2.5">
+							<div class="bg-blue-600 h-2.5 rounded-full" style="width: 42%"></div>
+						</div>
+					</div>
+					<div>
+						<div class="flex justify-between mb-1">
+							<span>Organic Search</span>
+							<span>31%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2.5">
+							<div class="bg-blue-600 h-2.5 rounded-full" style="width: 31%"></div>
+						</div>
+					</div>
+					<div>
+						<div class="flex justify-between mb-1">
+							<span>Social Media</span>
+							<span>15%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2.5">
+							<div class="bg-yellow-600 h-2.5 rounded-full" style="width: 15%"></div>
+						</div>
+					</div>
+					<div>
+						<div class="flex justify-between mb-1">
+							<span>Email</span>
+							<span>8%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2.5">
+							<div class="bg-red-600 h-2.5 rounded-full" style="width: 8%"></div>
+						</div>
+					</div>
+					<div>
+						<div class="flex justify-between mb-1">
+							<span>Referral</span>
+							<span>4%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-2.5">
+							<div class="bg-purple-600 h-2.5 rounded-full" style="width: 4%"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="bg-white rounded-lg shadow p-6 col-span-2">
+				<h3 class="text-xl font-semibold mb-4">Recent Orders</h3>
+				<div class="overflow-x-auto">
+					<table class="min-w-full">
+						<thead>
+							<tr class="text-left text-gray-500">
+								<th class="py-2">Order ID</th>
+								<th class="py-2">Customer</th>
+								<th class="py-2">Date</th>
+								<th class="py-2">Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="border-t">
+								<td class="py-3">#ORD-0001</td>
+								<td class="py-3">John Smith</td>
+								<td class="py-3">Jun 24, 2023</td>
+								<td class="py-3">$125.00</td>
+							</tr>
+							<tr class="border-t">
+								<td class="py-3">#ORD-0002</td>
+								<td class="py-3">Emma Johnson</td>
+								<td class="py-3">Jun 24, 2023</td>
+								<td class="py-3">$258.50</td>
+							</tr>
+							<tr class="border-t">
+								<td class="py-3">#ORD-0003</td>
+								<td class="py-3">Michael Brown</td>
+								<td class="py-3">Jun 23, 2023</td>
+								<td class="py-3">$89.99</td>
+							</tr>
+							<tr class="border-t">
+								<td class="py-3">#ORD-0004</td>
+								<td class="py-3">Sarah Williams</td>
+								<td class="py-3">Jun 23, 2023</td>
+								<td class="py-3">$452.75</td>
+							</tr>
+							<tr class="border-t">
+								<td class="py-3">#ORD-0005</td>
+								<td class="py-3">David Miller</td>
+								<td class="py-3">Jun 22, 2023</td>
+								<td class="py-3">$325.00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	
+</AdminLayout>

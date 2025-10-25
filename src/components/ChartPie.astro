@@ -1,0 +1,63 @@
+---
+
+---
+
+<canvas id="myChart2"></canvas>
+
+<script is:inline>
+    const ctx2 = document.getElementById("myChart2");
+    const redGrad = ctx.createLinearGradient(0, 0, 0, 400);
+    redGrad.addColorStop(0, 'rgba(187, 0, 29, 0.8)');
+    redGrad.addColorStop(1, 'rgba(255, 0, 40, 0)');
+
+    const orangeGrad = ctx.createLinearGradient(0, 0, 0, 400);
+    orangeGrad.addColorStop(0, 'rgba(206, 97, 0, 0.8)');
+    orangeGrad.addColorStop(1, 'rgba(255, 120, 0, 0)');
+
+    const yellowGrad = ctx.createLinearGradient(0, 0, 0, 400);
+    yellowGrad.addColorStop(0, 'rgba(209, 207, 2, 0.8)');
+    yellowGrad.addColorStop(1, 'rgba(255, 253, 0, 0)');
+
+    const greenGrad = ctx.createLinearGradient(0, 0, 0, 400);
+    greenGrad.addColorStop(0, 'rgba(0, 211, 38, 0.8)');
+    greenGrad.addColorStop(1, 'rgba(0, 255, 45, 0)');
+
+    const blueGrad = ctx.createLinearGradient(0, 0, 0, 400);
+    blueGrad.addColorStop(0, 'rgba(0, 107, 211, 0.8)');
+    blueGrad.addColorStop(1, 'rgba(0, 130, 255, 0)');
+
+
+    const data2 = {
+        labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+        datasets: [
+            {
+                data: [30, 20, 15, 25, 10],
+                background : [redGrad, orangeGrad, yellowGrad, greenGrad, blueGrad],
+                hoverOffset: 4
+            },
+        ],
+    };
+
+    const config2 = {
+        type: "pie",
+        data: data2,
+        options: {
+            animation: {
+                duration: 1500,
+                easing: "easeOutBounce",
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "right",
+                },
+                title: {
+                    display: false,
+                    text: "Chart.js Pie Chart",
+                },
+            },
+        },
+    };
+    new Chart(ctx2, config2);
+</script>
