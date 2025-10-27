@@ -12,8 +12,8 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 
 		<div class="grid grid-row-1 lg:grid-cols-3 gap-6 mb-6">
 			<div class="bg-white rounded-lg shadow p-6 col-span-2 flex flex-wrap">
-				<span class="w-full flex">
-					<div class="flex justify-evenly flex-col gap-4 w-1/4">
+				<span class="w-full flex lg:flex-row flex-col ">
+					<div class="flex justify-evenly lg:flex-col flex-wrap gap-4 lg:w-1/4">
 						<span>
 							<h3 class="text-xl font-semibold">Dashboard</h3>
 							<span class="text-gray-500">Overview of latest month</span>
@@ -35,15 +35,15 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 
 					</div>
 
-					<div class="space-y-4 h-full w-3/4">
+					<div class="space-y-4 h-full lg:w-3/4">
 						<div class="w-full h-full">
 							<ChartLine />
 						</div>
 					</div>
 				</span>
 
-				<span class="w-full flex gap-x-2 items-center justify-around">
-					<div class="bg-white rounded-lg shadow p-2 h-fit">
+				<span class="w-full gap-2 grid place-items-center lg:grid-cols-4 lg:grid-rows-1 grid-cols-2">
+					<div class="rounded-lg shadow p-2 h-full">
 						<div class="flex items-center">
 							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
 								<i class="fas fa-users fa-2x"></i>
@@ -54,7 +54,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 							</div>
 						</div>
 					</div>
-					<div class="bg-white rounded-lg shadow p-2 h-fit">
+					<div class="rounded-lg shadow p-2 h-full">
 						<div class="flex items-center">
 							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
 								<i class="fas fa-users fa-2x"></i>
@@ -65,7 +65,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 							</div>
 						</div>
 					</div>
-					<div class="bg-white rounded-lg shadow p-2 h-fit">
+					<div class="rounded-lg shadow p-2 h-full">
 						<div class="flex items-center">
 							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
 								<i class="fas fa-users fa-2x"></i>
@@ -76,7 +76,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 							</div>
 						</div>
 					</div>
-					<div class="bg-white rounded-lg shadow p-2 h-fit">
+					<div class="rounded-lg shadow p-2 h-full">
 						<div class="flex items-center">
 							<div class="p-3 rounded-full bg-blue-100 text-blue-600">
 								<i class="fas fa-users fa-2x"></i>
@@ -90,7 +90,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 				</span>
 			</div>
 
-			<div class="bg-white rounded-lg shadow col-span-1">
+			<div class="bg-white rounded-lg shadow lg:col-span-1 col-span-2">
 				<CalendarWidget />
 			</div>
 		</div>
@@ -177,9 +177,9 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 			</div>
 		</div>
 
-		<div class="grid grid-cols-2 lg:grid-cols-2 gap-6">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-			<div class="bg-white rounded-lg shadow p-6">
+			<div class="bg-white rounded-lg shadow p-6 col-span-1">
 				<h3 class="text-xl font-semibold mb-4">Traffic Sources</h3>
 				<div class="space-y-4">
 					<div class="h-[250px] w-full">
@@ -188,7 +188,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 				</div>
 			</div>
 
-			<div class="bg-white rounded-lg shadow p-6">
+			<div class="bg-white rounded-lg shadow p-6 col-span-1">
 				<h3 class="text-xl font-semibold mb-4">Traffic Sources</h3>
 				<div class="space-y-4">
 					<div>
@@ -239,7 +239,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 				</div>
 			</div>
 
-			<div class="bg-white rounded-lg shadow p-6 col-span-2">
+			<div class="bg-white rounded-lg shadow p-6 col-span-1 lg:col-span-2">
 				<h3 class="text-xl font-semibold mb-4">Recent Orders</h3>
 				<div class="overflow-x-auto">
 					<table class="min-w-full">

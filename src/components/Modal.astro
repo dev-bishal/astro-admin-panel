@@ -1,0 +1,552 @@
+---
+
+---
+
+<!-- Modal Header -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Modal Component System</h1>
+                <p class="text-gray-600">A comprehensive collection of modal dialogs for every use case.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Modal Types Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Confirmation Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showConfirmationModal()">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-question-circle text-blue-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Confirmation Modal</h3>
+                <p class="text-gray-600 text-sm">Ask users to confirm an action before proceeding</p>
+            </div>
+
+            <!-- Delete Confirmation -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showDeleteModal()">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-trash text-red-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Delete Confirmation</h3>
+                <p class="text-gray-600 text-sm">Critical actions that require extra confirmation</p>
+            </div>
+
+            <!-- Success Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showSuccessModal()">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Success Modal</h3>
+                <p class="text-gray-600 text-sm">Show success messages after completed actions</p>
+            </div>
+
+            <!-- Error Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showErrorModal()">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Error Modal</h3>
+                <p class="text-gray-600 text-sm">Display error messages and troubleshooting steps</p>
+            </div>
+
+            <!-- Warning Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showWarningModal()">
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-exclamation text-yellow-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Warning Modal</h3>
+                <p class="text-gray-600 text-sm">Warn users about potential issues or consequences</p>
+            </div>
+
+            <!-- Form Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showFormModal()">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-edit text-purple-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Form Modal</h3>
+                <p class="text-gray-600 text-sm">Collect user input within a modal dialog</p>
+            </div>
+
+            <!-- Info Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showInfoModal()">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-info-circle text-blue-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Info Modal</h3>
+                <p class="text-gray-600 text-sm">Display informational content to users</p>
+            </div>
+
+            <!-- Loading Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showLoadingModal()">
+                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-spinner text-gray-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Loading Modal</h3>
+                <p class="text-gray-600 text-sm">Show loading state during operations</p>
+            </div>
+
+            <!-- Custom Modal -->
+            <div class="demo-card bg-white rounded-xl shadow-sm p-6" onclick="showCustomModal()">
+                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-cog text-indigo-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Custom Modal</h3>
+                <p class="text-gray-600 text-sm">Fully customizable modal with any content</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="showConfirmationModal()" class="btn btn-primary">
+                    <i class="fas fa-question-circle"></i> Confirm
+                </button>
+                <button onclick="showDeleteModal()" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button onclick="showSuccessModal()" class="btn btn-secondary" style="background: #10b981;">
+                    <i class="fas fa-check"></i> Success
+                </button>
+                <button onclick="showFormModal()" class="btn btn-outline">
+                    <i class="fas fa-edit"></i> Form
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
+
+    <script is:inline>
+        // Modal System
+        class ModalSystem {
+            constructor() {
+                this.container = document.getElementById('modal-container');
+                this.activeModal = null;
+            }
+
+            createModal(options) {
+                const {
+                    type = 'default',
+                    size = 'md',
+                    title = '',
+                    message = '',
+                    icon = null,
+                    content = '',
+                    buttons = [],
+                    onClose = null,
+                    closeOnOverlay = true,
+                    closeOnEscape = true
+                } = options;
+
+                // Create modal overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'modal-overlay';
+                
+                // Generate buttons HTML
+                let buttonsHTML = '';
+                if (buttons.length > 0) {
+                    buttonsHTML = `
+                        <div class="modal-footer">
+                            ${buttons.map(btn => `
+                                <button class="btn ${btn.class || 'btn-outline'}" 
+                                        data-action="${btn.action || 'close'}">
+                                    ${btn.icon ? `<i class="${btn.icon}"></i>` : ''}
+                                    ${btn.text}
+                                </button>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                overlay.innerHTML = `
+                    <div class="modal modal-${size}">
+                        <button class="modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        ${title ? `
+                            <div class="modal-header flex items-center gap-2">
+                                ${icon ? `<div class="modal-icon ${type}">${icon}</div>` : ''}
+                                <h2 class="text-xl font-semibold text-gray-800">${title}</h2>
+                            </div>
+                        ` : ''}
+                        <div class="modal-body">
+                            ${message ? `<p class="text-gray-600 mb-4">${message}</p>` : ''}
+                            ${content}
+                        </div>
+                        ${buttonsHTML}
+                    </div>
+                `;
+
+                // Store modal data
+                overlay._modalData = { options, onClose };
+
+                // Close button event
+                const closeBtn = overlay.querySelector('.modal-close');
+                closeBtn.addEventListener('click', () => this.closeModal(overlay));
+
+                // Overlay click event
+                if (closeOnOverlay) {
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            this.closeModal(overlay);
+                        }
+                    }); 
+                }
+
+                // Button click events
+                overlay.querySelectorAll('[data-action]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const action = e.target.closest('button').getAttribute('data-action');
+                        this.handleButtonAction(action, overlay);
+                    });
+                });
+
+                // Escape key event
+                if (closeOnEscape) {
+                    const escapeHandler = (e) => {
+                        if (e.key === 'Escape' && this.activeModal === overlay) {
+                            this.closeModal(overlay);
+                        }
+                    };
+                    document.addEventListener('keydown', escapeHandler);
+                    overlay._escapeHandler = escapeHandler;
+                }
+
+                return overlay;
+            }
+
+            handleButtonAction(action, modal) {
+                switch(action) {
+                    case 'close':
+                        this.closeModal(modal);
+                        break;
+                    case 'confirm':
+                        // Handle confirm action - in real app, you'd call a callback
+                        this.closeModal(modal);
+                        setTimeout(() => this.showSuccessModal('Action confirmed successfully!'), 300);
+                        break;
+                    case 'delete':
+                        // Handle delete action
+                        const loadingModal = this.showLoadingModal();
+                        setTimeout(() => {
+                            this.closeModal(loadingModal);
+                            this.closeModal(modal);
+                            this.showSuccessModal('Item deleted successfully!');
+                        }, 2000);
+                        break;
+                    case 'submit':
+                        // Handle form submission
+                        this.closeModal(modal);
+                        setTimeout(() => this.showSuccessModal('Form submitted successfully!'), 300);
+                        break;
+                    default:
+                        this.closeModal(modal);
+                }
+            }
+
+            showModal(options) {
+                // Close any existing modal
+                if (this.activeModal) {
+                    this.closeModal(this.activeModal);
+                }
+
+                const modal = this.createModal(options);
+                this.container.appendChild(modal);
+                
+                // Trigger animation
+                setTimeout(() => modal.classList.add('active'), 10);
+                
+                this.activeModal = modal;
+                return modal;
+            }
+
+            closeModal(modal) {
+                if (!modal) return;
+                
+                modal.classList.remove('active');
+                
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.parentNode.removeChild(modal);
+                    }
+                    if (modal._escapeHandler) {
+                        document.removeEventListener('keydown', modal._escapeHandler);
+                    }
+                    if (this.activeModal === modal) {
+                        this.activeModal = null;
+                    }
+                    // Call onClose callback if provided
+                    if (modal._modalData && modal._modalData.onClose) {
+                        modal._modalData.onClose();
+                    }
+                }, 300);
+            }
+
+            closeAll() {
+                const modals = this.container.querySelectorAll('.modal-overlay');
+                modals.forEach(modal => this.closeModal(modal));
+            }
+
+            // Convenience methods for common modal types
+            showSuccessModal(message) {
+                this.showModal({
+                    type: 'success',
+                    size: 'sm',
+                    icon: '<i class="fas fa-check"></i>',
+                    title: 'Success!',
+                    message: message,
+                    buttons: [
+                        {
+                            text: 'Continue',
+                            class: 'btn-primary',
+                            action: 'close'
+                        }
+                    ],
+                    closeOnOverlay: false,
+                    closeOnEscape: false
+                });
+            }
+
+            showLoadingModal() {
+                return this.showModal({
+                    type: 'info',
+                    size: 'sm',
+                    title: 'Processing...',
+                    content: `
+                        <div class="text-center">
+                            <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+                            <p class="text-gray-600">Please wait while we process your request.</p>
+                        </div>
+                    `,
+                    closeOnOverlay: false,
+                    closeOnEscape: false
+                });
+            }
+        }
+
+        // Initialize modal system
+        const modalSystem = new ModalSystem();
+
+        // Demo Modal Functions
+        function showConfirmationModal() {
+            modalSystem.showModal({
+                type: 'info',
+                size: 'sm',
+                title: 'Confirm Action',
+                message: 'Are you sure you want to proceed with this action? This cannot be undone.',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        class: 'btn-outline',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Confirm',
+                        class: 'btn-primary',
+                        icon: 'fas fa-check',
+                        action: 'confirm'
+                    }
+                ]
+            });
+        }
+
+        function showDeleteModal() {
+            modalSystem.showModal({
+                type: 'error',
+                size: 'sm',
+                icon: '<i class="fas fa-trash"></i>',
+                title: 'Delete Item',
+                message: 'This action will permanently delete this item and all associated data. This cannot be undone.',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        class: 'btn-outline',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Delete',
+                        class: 'btn-danger',
+                        icon: 'fas fa-trash',
+                        action: 'delete'
+                    }
+                ]
+            });
+        }
+
+        function showSuccessModal(message = 'Operation completed successfully!') {
+            modalSystem.showSuccessModal(message);
+        }
+
+        function showErrorModal() {
+            modalSystem.showModal({
+                type: 'error',
+                size: 'md',
+                icon: '<i class="fas fa-exclamation-triangle"></i>',
+                title: 'Error Occurred',
+                message: 'We encountered an issue while processing your request. Please try again in a few moments.',
+                buttons: [
+                    {
+                        text: 'Try Again',
+                        class: 'btn-primary',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Contact Support',
+                        class: 'btn-outline',
+                        action: 'close'
+                    }
+                ]
+            });
+        }
+
+        function showWarningModal() {
+            modalSystem.showModal({
+                type: 'warning',
+                size: 'md',
+                icon: '<i class="fas fa-exclamation"></i>',
+                title: 'Warning',
+                message: 'You are about to perform an action that may have unintended consequences. Please review your changes carefully.',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        class: 'btn-outline',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Proceed Anyway',
+                        class: 'btn-primary',
+                        action: 'confirm'
+                    }
+                ]
+            });
+        }
+
+        function showFormModal() {
+            modalSystem.showModal({
+                type: 'info',
+                size: 'lg',
+                title: 'Create New User',
+                content: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label class="input-label">First Name</label>
+                                <input type="text" class="input-field" placeholder="John">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Last Name</label>
+                                <input type="text" class="input-field" placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Email</label>
+                            <input type="email" class="input-field" placeholder="john@example.com">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Role</label>
+                            <select class="input-field">
+                                <option>User</option>
+                                <option>Admin</option>
+                                <option>Editor</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        class: 'btn-outline',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Create User',
+                        class: 'btn-primary',
+                        icon: 'fas fa-plus',
+                        action: 'submit'
+                    }
+                ]
+            });
+        }
+
+        function showInfoModal() {
+            modalSystem.showModal({
+                type: 'info',
+                size: 'md',
+                icon: '<i class="fas fa-info-circle"></i>',
+                title: 'New Features Available',
+                message: 'We\'ve added several new features to improve your experience. Check out the updated documentation to learn more about what\'s new.',
+                buttons: [
+                    {
+                        text: 'View Documentation',
+                        class: 'btn-primary',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Maybe Later',
+                        class: 'btn-outline',
+                        action: 'close'
+                    }
+                ]
+            });
+        }
+
+        function showLoadingModal() {
+            return modalSystem.showLoadingModal();
+        }
+
+        function showCustomModal() {
+            modalSystem.showModal({
+                size: 'xl',
+                title: 'Custom Modal Example',
+                content: `
+                    <div class="space-y-4">
+                        <p class="text-gray-600">This is a fully customizable modal with any content you want to display.</p>
+                        
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">Custom Content Section</h4>
+                            <p class="text-gray-600 text-sm">You can add forms, images, lists, or any other HTML content here.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                <i class="fas fa-chart-bar text-blue-600 text-2xl mb-2"></i>
+                                <p class="text-sm text-blue-800">Analytics</p>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <i class="fas fa-users text-green-600 text-2xl mb-2"></i>
+                                <p class="text-sm text-green-800">Team</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                buttons: [
+                    {
+                        text: 'Close',
+                        class: 'btn-outline',
+                        action: 'close'
+                    },
+                    {
+                        text: 'Save Changes',
+                        class: 'btn-primary',
+                        action: 'submit'
+                    }
+                ]
+            });
+        }
+
+        // Close all modals when clicking demo cards (prevent multiple modals)
+        /* document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.demo-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    modalSystem.closeAll();
+                });
+            });
+        }); */
+    </script>
