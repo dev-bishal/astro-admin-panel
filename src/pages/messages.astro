@@ -63,15 +63,15 @@ import AdminLayout from "../Layout/AdminLayout.astro";
     <!-- Header -->
     <header class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
+            <div class="flex lg:items-center lg:justify-between gap-4 lg:flex-row flex-col">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">Contact Messages</h1>
                     <p class="text-gray-600">Manage and respond to customer inquiries</p>
                 </div>
-                <div class="flex items-center space-x-3">
+                <div class="flex lg:items-center lg:justify-between gap-4 lg:flex-row flex-col">
                     <div class="relative">
                         <input type="text" placeholder="Search messages..."
-                            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64">
+                            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 lg:w-64 w-full">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400"></i>
                         </div>
@@ -162,7 +162,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
                     <div class="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
                         <!-- Message 1 -->
                         <div class="message-card unread p-6 fade-in" data-message-id="1">
-                            <div class="flex items-start justify-between">
+                            <div class="flex lg:items-start lg:justify-between gap-4 lg:flex-row flex-col">
                                 <div class="flex items-start space-x-4 flex-1">
                                     <div class="flex-shrink-0">
                                         <div
@@ -251,7 +251,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 
                         <!-- Message 2 -->
                         <div class="message-card important p-6 fade-in" data-message-id="2">
-                            <div class="flex items-start justify-between">
+                            <div class="flex lg:items-start lg:justify-between gap-4 lg:flex-row flex-col">
                                 <div class="flex items-start space-x-4 flex-1">
                                     <div class="flex-shrink-0">
                                         <div
@@ -301,7 +301,7 @@ import AdminLayout from "../Layout/AdminLayout.astro";
 
                         <!-- Message 3 -->
                         <div class="message-card p-6 fade-in" data-message-id="3">
-                            <div class="flex items-start justify-between">
+                            <div class="flex lg:items-start lg:justify-between gap-4 lg:flex-row flex-col">
                                 <div class="flex items-start space-x-4 flex-1">
                                     <div class="flex-shrink-0">
                                         <div
